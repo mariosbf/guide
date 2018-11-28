@@ -240,3 +240,12 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+# annoying .DS_Store files on macOS
+.DS_Store
+
+# PDF outputs
+cs141.pdf
+lab*.pdf
+lecture*.pdf
+sol*.pdf
