@@ -123,15 +123,15 @@ If you are working on your own machine and want to install additional packages, 
 \section{Version control}
 \label{sec:git}
 
-The skeleton code for all practicals and for all coursework is available as Git repositories which are hosted on GitHub at \url{https://github.com/fpclass/}. GitHub is one of several web services that allows you to host Git repositories online, along with \emph{e.g.} GitLab and BitBucket which are also popular. You are encouraged to use version control to obtain and maintain your code. If you have not had much exposure to version control using Git before, \emph{Pro Git} by Scott Chacon and Ben Straub is a very good reference book which is available for free at \url{https://git-scm.com/book/en/v2}. Below is a very quick reference of some of the most important commands you will use.
+The skeleton code for all practicals and for all coursework is available as Git repositories which are hosted on GitHub at \url{https://github.com/fpclass/}. GitHub is one of several web services that allows you to host Git repositories online, along with \emph{e.g.} GitLab and BitBucket which are also popular. You are encouraged to use version control to obtain and maintain your code. If you have not had much exposure to version control using Git before, \emph{Pro Git} by Scott Chacon and Ben Straub is a very good reference book which is available for free at {\small \url{https://git-scm.com/book/en/v2}}. Below is a very quick reference of some of the most important commands you will use.
 
 To obtain the code for e.g. the first practical which is located in the \texttt{\small lab1} repository, you will want to run the following command on your machine once you have installed \texttt{\small git} (note that \texttt{\small git} is already installed by default on the lab machines, macOS, and many linux distributions):
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/lab1
 \end{minted}
-This will create a local copy of the \texttt{\small lab1} repository on your machine that you can modify. If you are planning to work on your practical or coursework from multiple locations (e.g. a machine in the lab and your personal machine), you may find it beneficial to create a GitHub account and \emph{fork} the relevant repositories to your account instead. This creates a copy of them on your GitHub account which can then be read from and written to form anywhere. You can fork repositories on the GitHub website by visiting e.g. \url{https://github.com/fpclass/lab1} once logged in and clicking the ``fork'' button. If you take this approach, you will still need to obtain a local copy of the repository on all machines you plan to work on by running the command shown above, but replacing \texttt{fpclass} with your GitHub username. 
+This will create a local copy of the \texttt{\small lab1} repository on your machine that you can modify. If you are planning to work on your practical or coursework from multiple locations (e.g. a machine in the lab and your personal machine), you may find it beneficial to create a GitHub account and \emph{fork} the relevant repositories to your account instead. This creates a copy of them on your GitHub account which can then be read from and written to form anywhere. You can fork repositories on the GitHub website by visiting e.g. {\small \url{https://github.com/fpclass/lab1}} once logged in and clicking the ``fork'' button. If you take this approach, you will still need to obtain a local copy of the repository on all machines you plan to work on by running the command shown above, but replacing \texttt{\small fpclass} with your GitHub username. 
 
-\textbf{WARNING}: do not fork the coursework repositories to your account as they will end up being public and you do not want everyone to be able to see your solutions! Use the links provided on the module website instead which will allow you to create private forks of the repositories instead.
+\textbf{WARNING}: do not fork the coursework repositories to your account as they will end up being public and you do not want everyone to be able to see your solutions! Use the links provided on the module website instead which will allow you to create private forks of the repositories.
 
 Once you have made some changes to the skeleton code, you will want to \emph{commit} your changes. This will tell \texttt{\small git} to remember that version in case you ever wish to go back to it. You can commit your changes by running:
 \begin{minted}{bash}
@@ -150,7 +150,7 @@ None of this is necessary if you have cloned the code from \url{https://github.c
 \section{Development tools}
 \label{sec:dev-tools}
 
-Most IDEs and text editors have plugins which can help you write Haskell code. They all rely on having some tool pr 
+Most IDEs and text editors have plugins which can help you write Haskell code, by adding syntax highlighting or other useful features. More sophisticated plugins require additional tools which provide programming language specific functionality to the editor. 
 
 \subsection{Haskell IDE Engine}
 
