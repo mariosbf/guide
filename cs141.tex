@@ -1,0 +1,266 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LaTeX sources for The Guide to Functional Programming
+%%
+%% This work is licensed under the Creative Commons
+%% Attribution-NonCommercial-ShareAlike 2.0 UK: England & Wales License. To
+%% view a copy of this license, visit
+%% http://creativecommons.org/licenses/by-nc-sa/2.0/uk/ or send a letter to
+%% Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper,twoside,fleqn]{report}
+
+\usepackage{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyeq}
+\usepackage{fancyhdr}
+\usepackage[explicit]{titlesec}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{array, booktabs}
+\usepackage{colortbl}
+\usepackage{wrapfig}
+\usepackage{pgfplots}
+\usepackage[strict]{changepage}
+\usepackage{graphbox}
+
+% Minted -------------------------------
+
+\usepackage{minted}
+\usepackage[
+backgroundcolor = gray!5
+, hidealllines=true
+]{mdframed}
+
+\surroundwithmdframed{minted}
+\usemintedstyle{lovelace}
+
+\setminted[text]{fontsize=\small}
+\setminted[haskell]{fontsize=\small}
+\setminted[bash]{fontsize=\small}
+\newcommand{\haskellIn}[1]{\mintinline[fontsize=\small]{haskell}{#1}}
+\newcommand{\bashIn}[1]{\mintinline[fontsize=\small]{bash}{#1}}
+
+% Tikz -------------------------------
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	arn_r/.style = {treenode, circle, red, draw=red,
+		text width=1.5em, very thick},
+	arn_x/.style = {treenode, circle, draw=white,
+		minimum width=1.5em, minimum height=1.5em},
+	cls/.style = { treenode, rectangle, red, draw=red,
+		text width=1.5em, very thick, minimum width=1.5em, minimum height=1.5em }
+}
+
+% UK English -------------------------------
+\usepackage[UKenglish]{babel}
+\usepackage[UKenglish]{isodate}
+
+% Hyperref -------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black
+}
+
+% cleveref
+\usepackage[nameinlink]{cleveref}
+
+\crefname{figure}{figure}{figures} % cleveref by default has `fig.'
+\Crefname{figure}{Figure}{Figures}
+
+\crefname{section}{section}{sections} % cleveref by default has `fig.'
+\Crefname{section}{Section}{Sections}
+
+% Fonts -------------------------------
+\usepackage[]{FiraSans}
+
+% Palatino (font)
+\usepackage{mathpazo}
+\linespread{1.05}         % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+
+% some format settings
+% for hard-bound final submission, use:
+%\setlength{\oddsidemargin}{4.6mm}     % 30 mm left margin - 1 in
+% for soft-bound version and techreport, use instead:
+\setlength{\oddsidemargin}{-0.4mm}    % 25 mm left margin - 1 in
+\setlength{\evensidemargin}{-0.4mm}
+\setlength{\topmargin}{-5.4mm}        % 20 mm top margin - 1 in
+\setlength{\textwidth}{160mm}         % 20/25 mm right margin
+\setlength{\textheight}{237mm}        % 20 mm bottom margin
+\setlength{\headheight}{5mm}
+\setlength{\headsep}{5mm}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{\medskipamount}
+\renewcommand\baselinestretch{1.2} % thesis format (not needed for techreport)
+% don't let large figures hijack entire pages
+\renewcommand\topfraction{.9}
+\renewcommand\textfraction{.1}
+\renewcommand\floatpagefraction{.8}
+
+\usepackage[nomap]{FiraMono}
+
+\author{Michael B. Gale}
+
+
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+
+\titleformat{name=\chapter}[hang]{}{}{0cm}{%
+	\protect\thispagestyle{fancy}
+	\begin{center}
+		\large $\lambda$.\thechapter \\
+		\huge \textsc{#1}
+	\end{center}
+	%\chaptermark{\chapter}
+}
+\titleformat{name=\chapter,numberless}[hang]{}{}{0cm}{%
+	\begin{center}
+		\huge \textsc{#1}
+	\end{center}
+	%\chaptermark{\chapter}
+}
+
+%\titleformat{\subsection}{format}{label}{0em}{before-code}
+
+\titleformat{\section}
+	{\bfseries\large}
+	{\llap{\parbox{1.5cm}{\thesection\hfill}}#1}
+	{0em}
+	{\bfseries}
+
+\titleformat{\subsection}
+{\bfseries}{\llap{\parbox{1.5cm}{\thesubsection\hfill}}#1}{0em}{\bfseries}
+
+
+% misc. commands
+\newcounter{TaskCounter}
+
+\newcommand{\question}[1]{\vspace{-0.7cm}{\footnotesize \emph{#1}} \vspace{0.25cm}}
+\newcommand{\topics}[1]{\vspace{-0.5cm}{\footnotesize \emph{Topics}: #1} \vspace{0.25cm}}
+\newcommand{\task}[2][]{\indent\llap{\parbox{1.5cm}{\refstepcounter{TaskCounter}\label{#1}{\firamedium Ex\theTaskCounter}\hfill}}#2}
+\newcommand{\solution}[2]{\indent\llap{\parbox{1.5cm}{\textbf{Ex#1}\hfill}}#2}
+\newcommand{\taskLine}{\bigskip\hrule\bigskip}
+
+
+
+% titles, dates, etc. of lectures and labs
+\input{topics.tex}
+
+\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{fancy}}}
+
+\begin{document}
+\fancypagestyle{empty}{\fancyhf{}}
+\pagestyle{empty}
+\pagenumbering{roman} 
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\input{titlepage.tex}
+
+\cleardoublepage
+%\setcounter{page}{1}
+
+\fancyhf{}
+\fancyhead[LE, RO]{\emph{Functional Programming (CS141)}}
+\fancyhead[LO, RE]{\emph{Michael B. Gale}}
+%\fancyhead[RE,LO]{Guides and tutorials}
+%\fancyfoot[CE,CO]{\leftmark}
+\fancyfoot[LE,RO]{\thepage}
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\newgeometry{
+	tmargin=2.5cm,
+	textwidth=155mm, 
+	textheight=247mm,
+	headheight=5mm,
+	headsep=5mm,
+	inner=30mm
+}
+
+\tableofcontents
+
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\input{overview.tex}
+\input{books.tex}
+\input{timeline.tex}
+\input{coursework.tex}
+\input{exam.tex}
+\input{guidance.tex}
+\input{lecture-notes.tex}
+
+\cleardoublepage
+\chapter{Labs}
+
+%\input{lectures/lecture1.tex}
+%\input{lectures/lecture2.tex}
+\input{labs/lab1.tex}
+
+%\input{lectures/lecture3.tex}
+%\input{lectures/lecture4.tex}
+\input{labs/lab2.tex} \newpage
+
+%\input{lectures/lecture5.tex}
+%\input{lectures/lecture6.tex}
+\input{labs/lab3.tex}
+
+%\input{lectures/lecture7.tex}
+%\input{lectures/lecture8.tex}
+\input{labs/lab4.tex}
+
+%\input{lectures/lecture9.tex}
+%\input{lectures/lecture10.tex}
+\input{labs/lab5.tex} \newpage
+
+%\input{lectures/lecture11.tex}
+%\input{lectures/lecture12.tex}
+\input{labs/lab6.tex} \newpage
+
+%\input{lectures/lecture13.tex}
+%\input{lectures/lecture14.tex}
+\input{labs/lab7.tex} \newpage
+
+%\input{lectures/lecture15.tex}
+%\input{lectures/lecture16.tex}
+\input{labs/lab8.tex} \newpage
+
+%\input{lectures/lecture17.tex}
+%\input{lectures/lecture18.tex}
+\input{labs/lab9.tex} \newpage
+
+\input{labs/lab10.tex}
+
+%\input{lectures/lecture19.tex}
+
+\cleardoublepage
+\input{cswk/cswk1.tex}
+
+\cleardoublepage
+\input{cswk/cswk2.tex}
+
+\cleardoublepage
+\chapter{Solutions}
+
+This section contains model answers for selected exercises along with descriptions of how they could be derived. You should only read these for revision purposes or once you have completed the exercises yourself. Remember that it is better for you to ask for help in figuring something out than to just jump to the solutions.
+
+\input{labs/sol3.tex}
+
+\end{document}

@@ -1,0 +1,169 @@
+\section{Lab 2: \practicalTwoTitle}
+\topics{Basic types, function types, parametric polymorphism, lists, pairs, ad-hoc polymorphism via type classes, built-in type classes, type class constraints, and list comprehensions.}
+
+This practical is about \emph{types} in Haskell. You can obtain the code for this lab by cloning the respective repository from GitHub:
+\begin{minted}{bash}
+$ git clone https://github.com/fpclass/lab2
+\end{minted}
+In a nutshell, the type of an expression tells you what sort of value an expression eventually evaluates to. Not all expressions can be typed! If an expression cannot be reduced to a normal form, such as \haskellIn{not 7}, then it does not have a type. We use the following notation to say that an expression \texttt{\small expression} has type \texttt{\small type} -- this is referred to as a \emph{typing}:
+\begin{center}
+	\begin{tabular}{lcl}
+		\texttt{\small expression} & \texttt{\small ::} & \texttt{\small type}
+	\end{tabular}
+\end{center}
+Some examples of typings are:
+\begin{minted}{haskell}
+True                       :: Bool
+'a'                        :: Char 
+\x -> x                    :: a -> a
+\x -> False                :: a -> Bool 
+\x -> \y -> y              :: a -> b -> b
+if 5 > 6 then 'a' else 'b' :: Char 
+42                         :: Num a => a
+4 + 8 * 15 - 16            :: Num a => a
+(\x -> x) True             :: Bool
+\end{minted}
+As you can see, the size or complexity of a term does not necessarily correspond to that of a type. It only matters what an expression evaluates to. Some expressions have multiple permissible types. For example, the expression \haskellIn{42} could have type \haskellIn{Int} (the type of signed integers where the precision depends on your platform), \haskellIn{Integer} (the type of arbitrary precision integers), \haskellIn{Num a => a} (a polymorphic type representing all numeric types, \emph{i.e.} instances of the \haskellIn{Num} type class), as well as others.
+
+\subsubsection{Types}
+
+If an expression can be typed, the Haskell compiler can \emph{infer} the \emph{most general} type for us. For example, for numbers such as \haskellIn{42}, the \haskellIn{Int} type is permissible, but \haskellIn{Num a => a} is a more general type. ``More general'' generally means ``more polymorphic''. There is a command in the REPL which we can use to ask for the type of an expression:
+\begin{center}
+\begin{tabular}{|l|l|}
+	\hline 
+	\texttt{:t EXPRESSION}   & Shows the type of \texttt{EXPRESSION}. \\ 
+	\hline 
+\end{tabular}  
+\end{center}
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Launch the REPL and try it for yourself by asking for the types of the following expressions:}
+\begin{itemize}
+	\item \haskellIn{'a'}
+	\item \haskellIn{[True, True, False]}
+	\item \haskellIn{[1,2,3,4,5]}
+	\item \haskellIn{[]}
+	\item \haskellIn{\x -> x}
+	\item \haskellIn{1+1}
+\end{itemize}
+\bigskip
+\hrule
+\bigskip
+\task{Some expressions cannot be reduced to values and therefore do not have a type. Try asking for the types of the following expressions. Each expression will result in the type error which is explained below:} 
+\begin{itemize}
+\item \haskellIn{not 7} \\
+As mentioned in the lecture on type classes, the literal \haskellIn{7} has the most general type \haskellIn{Num a => a}. The Haskell compiler also knows that the \haskellIn{not} function has type \haskellIn{Bool -> Bool} so it expects its argument to be of type \haskellIn{Bool}. Because \haskellIn{Bool} is less polymorphic than \haskellIn{a}, the Haskell compiler deduces that \haskellIn{7} should be of type \haskellIn{Bool}. However, this results in a constraint of \haskellIn{Num Bool} which cannot be resolved because there is no instance of \haskellIn{Num} for the \haskellIn{Bool} type.
+\item \haskellIn{[1,True,3]} \\
+This results in the same error.
+\item \haskellIn{['a', False]} \\
+Lists in Haskell are \emph{homogeneous}. That is, they can only contain elements which have the same type. Neither \haskellIn{'a'} nor \haskellIn{False} have a polymorphic type and both have different types. Therefore, the Haskell compiler will tell you that the two types do not match.
+\end{itemize}
+\bigskip
+\hrule
+\bigskip
+\task{Recall from the lecture on type classes that the REPL essentially wraps each expression you try to evaluate into a call to the \haskellIn{show} function. Try to evaluate some expressions which \emph{are} well typed, but whose types do not have a \haskellIn{Show} instance. This is usually the case for functions. For example: }
+\begin{itemize}
+\item \haskellIn{not} \\
+Even though \haskellIn{not} is well typed, you get a type error if you try to evaluate it in the REPL. That is because the REPL does not know how to display a result that is a function. The error you get will tell you that there is no \haskellIn{Show} instance for \haskellIn{Bool -> Bool}, the type of \haskellIn{not}. 
+\end{itemize}
+\bigskip
+\hrule
+\bigskip
+
+\subsubsection{List comprehensions}
+
+Haskell has some syntactic sugar for generating lists which is referred to as \emph{list comprehensions}. These expressions are very similar to set comprehensions in mathematics. For this part of the lab, you will learn about their syntax and implement some lists using them.
+
+In the first lecture, you saw the \haskellIn{[1..4]} notation to generate the list of numbers from 1 to 4: \haskellIn{[1,2,3,4]}. In general, the \haskellIn{[n..m]} syntax can be used to denote ranges between any two values \haskellIn{n} and \haskellIn{m}. Note that for this to work, \haskellIn{n} and \haskellIn{m} must have the same type and that type must have an instance of the \haskellIn{Enum} type class. Specifically, \haskellIn{[n..m]} is syntactic sugar for \haskellIn{enumFromTo n m}, a member of the \haskellIn{Enum} type class.
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Complete the definitions of \haskellIn{zeroToTen} and \haskellIn{fourToEight} in \texttt{\small Lab2.hs} to implement the lists representing the numbers from 0 to 10 and from 4 to 8 respectively.}
+
+\bigskip
+\hrule
+\bigskip
+
+\task{As mentioned above, the \haskellIn{[n..m]} syntax works for any type that is an instance of \haskellIn{Enum}. Complete the definition of \haskellIn{lowercase} in \texttt{\small Lab2.hs} to implement the list of lower-case characters from \haskellIn{'a'} to \haskellIn{'z'}.}
+
+\bigskip
+\hrule
+\bigskip
+\pagebreak
+
+List comprehensions can also be used to generate lists from other lists, just like set comprehensions are used to generate sets from other sets. For example, the following expression is a list comprehension which generates the list of numbers that are double the numbers from 0 to 10:
+\begin{minted}{haskell}
+[2*n | n <- [0..10]]
+\end{minted}
+The \haskellIn{n <- [0..10]} part in this example is referred to as a \emph{generator}. Given some list on the right of \haskellIn{<-}, it loops through all the elements of that list and binds them to \haskellIn{n} one after the other. The part on the left of the \haskellIn{|} is what is used to generate an element of the resulting list, for all values obtained from the right of the \haskellIn{|}. So, for this example, the resulting list is \haskellIn{[0,2,4,6,8,10,12,14,16,18,20]}.
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Using a list comprehension, complete the definition of \haskellIn{powersOfTwo}, which calculates the powers of two for the factors from 1 to 10. The exponentiation operator in Haskell is \haskellIn{^}.} 
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Using a list comprehension, complete the definition of \haskellIn{factorials}, which calculates the list of factorials for the numbers 1 to 10.}
+
+\bigskip
+\hrule
+\bigskip
+
+List comprehensions may contain more than one generator. If there is more than one generator, all subsequent generators loop through their elements for every element in the preceding generator. You can think of these as nested loops:
+\begin{minted}{haskell}
+[x*y | x <- [1..3], y <- [1..4]]
+\end{minted}
+In this example, there are three elements in the list used by the first generator. Each element in that list is multiplied with every element in the list used by the second generator. Therefore, the result is a list of 12 elements where the first four elements are multiples of one, the next four are multiples of two, and the last four are multiples of three: \haskellIn{[1,2,3,4,2,4,6,8,3,6,9,12]}.
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Using a list comprehension with two generators, define \haskellIn{coords} to be a list of coordinates where the top left corner of the coordinate system is \haskellIn{(0,0)} and the bottom right is \haskellIn{(10,10)}.}
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Generators after the first in a list comprehension may also refer to variables that are bound by preceding generators. Use this to complete the definition of \linebreak \haskellIn{noMoreThanFive} which should be a list of all pairs \haskellIn{(x,y)} such that \haskellIn{x} is a number from 0 to 5 and \haskellIn{y} is also a number from 0 to 5, unless $x+y > 5$: \texttt{\small [(0,0), (0,1), (0,2), (0,3), (0,4), (0,5), (1,0), (1,1), (1,2), (1,3), (1,4), (2,0), ...]}}.
+
+\bigskip
+\hrule
+\bigskip
+
+Finally, a list comprehension may contain predicates to determine which elements produced by generators should be used for elements in the resulting list. For example, the following list comprehension generates all numbers which are factors of some number \haskellIn{n}. The \haskellIn{mod} function from the standard library calculates the remainder of two numbers:
+\begin{minted}{haskell}
+factors :: Int -> [Int]
+factors n = [x | x <- [1..n], mod n x == 0]
+\end{minted} 
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Complete the definition of \haskellIn{evens} which should be the list of all numbers from 0 to 100 which are even.}
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Complete the definition of \haskellIn{multiples} which, given some natural number \haskellIn{n}, should produce the list of all factors of 3 and 5 in the range from 0 to \haskellIn{n} (inclusive). For example, \haskellIn{multiples 10} should evaluate to \haskellIn{[0,3,5,6,9,10]}.}
+
+\bigskip
+\hrule
+\bigskip
+
+\task{Finally, ensure that all your definitions are correct by running all of the unit tests with \bashIn{stack test} in a terminal.}
+
+\bigskip
+\hrule
+\bigskip

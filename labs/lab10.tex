@@ -1,0 +1,59 @@
+\section{Lab 10: \practicalNineTitle}
+\topics{Kinds, phantom types, GADTs, singleton types, pattern matching with GADTs, data type promotion, closed and open type families.}
+
+The aim of this last practical is to implement \emph{indexed vectors} and a range of associated functions. An indexed vector is like a list, except that it is also contains by its size in its type. To demonstrate the difference, consider the type of a list of integers:
+\begin{displaymath}
+\hslist{\mathit{Int}}
+\end{displaymath}
+If some expression has this type, then you know that it is a list of integers. However, you don't know how many elements (if any) it contains. This may a problem if, for example, you want to write a function like $\mathit{head}$ which requires there to be at least one element. The solution is to keep track of the length of a list on the type-level and only allow $\mathit{head}$ to be called on non-empty lists.
+
+The skeleton code for this practical is located at 
+\begin{minted}{bash}
+$ git clone https://github.com/fpclass/lab10
+\end{minted}
+
+\subsubsection{Type-indexed vectors}
+
+For this practical, we make use of the \href{https://hackage.haskell.org/package/base/docs/GHC-TypeLits.html}{\texttt{GHC.TypeLits}} module, which contains an implementation of type-level natural numbers similar to the one we have seen in the lectures. With its help, we can define the following type for vectors: 
+\begin{displaymath}
+\begin{array}{l}
+\mathbf{data}~\mathit{Vector}~(n :: \mathit{Nat})~a~\mathbf{where} \\
+\quad \begin{array}{lcl}
+\mathit{Nil}  & :: & \mathit{Vector}~0~a \\
+\mathit{Cons} & :: & a \to \mathit{Vector}~n~a \to \mathit{Vector}~(n+1)~a
+\end{array}
+\end{array}
+\end{displaymath}
+In summary, $\mathit{Vector}$ is a type of kind $\mathit{Nat} \to \star \to \star$ with two term-level constructors: $\mathit{Nil}$ of type $\mathit{Vector~0~a}$ and $\mathit{Cons}$ of type $a \to \mathit{Vector}~n~a \to \mathit{Vector}~(n+1)~a$. Both function just like the empty list and cons for regular lists in Haskell, except that we keep track of the length of the list in the type. $\mathit{Nil}$ is the empty vector and therefore its length is always $0$. $\mathit{Cons}$ adds an element to a vector of some arbitrary length $n$, resulting in a vector of length $n+1$.
+
+%\textbf{Task}: Write a function $\mathit{elem}$ which determines if a vector contains a given element.
+
+\textbf{Task}: Write a function $\mathit{vhead}$ which returns the head of a non-empty vector.
+
+\textbf{Task}: Write a function $\mathit{vappend}$ which concatenates two vectors.
+
+\textbf{Task}: Write a function $\mathit{vzip}$ which behaves like $\mathit{zip}$ but for two vectors.
+
+\subsubsection{Reifying type-indexed vectors}
+
+\emph{Reification} refers to the process of turning a type into a term-level value. For example, since our vectors are indexed by their length on the type-level, we might like to use that information at the term-level.
+
+
+
+%\textbf{Task}: Write a function $\mathit{vlength}$ of type $\mathit{KnownNat}~n \Rightarrow \mathit{Vector}~n~a \to $
+
+\subsubsection{Constructing type-indexed vectors}
+
+A singleton type is a type which only has one corresponding value. For example, the unit type $()$ is a singleton type because there is only one value of this type, the unit value $()$. However, most types can be turned into singletons. For example, we can turn natural numbers into
+\begin{displaymath}
+\begin{array}{l}
+\mathbf{data}~\mathit{SNat}~(n :: \mathit{Nat})~\mathbf{where} \\
+\quad \begin{array}{lcl}
+\mathit{SZero} & :: & \mathit{SNat}~0 \\
+\mathit{SSucc} & :: & \mathit{SNat}~n \to \mathit{SNat}~(n+1)
+\end{array}
+\end{array}
+\end{displaymath}
+$\mathit{SZero}$ is the only value of type $\mathit{SNat}~0$, $\mathit{SSucc}~\mathit{SZero}$ is the only value of $\mathit{SNat}~1$, $\mathit{SSucc}~(\mathit{SSucc}~\mathit{SZero})$ is the only value of $\mathit{SNat}~2$, and so on. This allows us to write functions whose types are parametrised by the values the function is given as arguments. 
+
+\textbf{Task}: Write a function $\mathit{vreplicate}$ which behaves like $\mathit{replicate}$, but for type-indexed vectors. 
