@@ -1,59 +1,110 @@
 \section{Lab 10: \practicalNineTitle}
 \topics{Kinds, phantom types, GADTs, singleton types, pattern matching with GADTs, data type promotion, closed and open type families.}
 
-The aim of this last practical is to implement \emph{indexed vectors} and a range of associated functions. An indexed vector is like a list, except that it is also contains by its size in its type. To demonstrate the difference, consider the type of a list of integers:
-\begin{displaymath}
-\hslist{\mathit{Int}}
-\end{displaymath}
-If some expression has this type, then you know that it is a list of integers. However, you don't know how many elements (if any) it contains. This may a problem if, for example, you want to write a function like $\mathit{head}$ which requires there to be at least one element. The solution is to keep track of the length of a list on the type-level and only allow $\mathit{head}$ to be called on non-empty lists.
-
-The skeleton code for this practical is located at 
+This final lab is all about type-level programming. The skeleton code can be obtained as usual with the following command:
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/lab10
 \end{minted}
+There are some commands that are supported by the REPL which you may find useful for type-level programming:
+\begin{center}
+	\begin{tabular}{|l|l|}
+		\hline 
+		\texttt{\small :k TYPE}   & Infers the kind of \texttt{\small TYPE}. \\ 
+		\hline 
+		\texttt{\small :kind!~TYPE}  & Reduces \texttt{\small TYPE} to a normal form. \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
 
-\subsubsection{Type-indexed vectors}
+\taskLine 
 
-For this practical, we make use of the \href{https://hackage.haskell.org/package/base/docs/GHC-TypeLits.html}{\texttt{GHC.TypeLits}} module, which contains an implementation of type-level natural numbers similar to the one we have seen in the lectures. With its help, we can define the following type for vectors: 
-\begin{displaymath}
-\begin{array}{l}
-\mathbf{data}~\mathit{Vector}~(n :: \mathit{Nat})~a~\mathbf{where} \\
-\quad \begin{array}{lcl}
-\mathit{Nil}  & :: & \mathit{Vector}~0~a \\
-\mathit{Cons} & :: & a \to \mathit{Vector}~n~a \to \mathit{Vector}~(n+1)~a
-\end{array}
-\end{array}
-\end{displaymath}
-In summary, $\mathit{Vector}$ is a type of kind $\mathit{Nat} \to \star \to \star$ with two term-level constructors: $\mathit{Nil}$ of type $\mathit{Vector~0~a}$ and $\mathit{Cons}$ of type $a \to \mathit{Vector}~n~a \to \mathit{Vector}~(n+1)~a$. Both function just like the empty list and cons for regular lists in Haskell, except that we keep track of the length of the list in the type. $\mathit{Nil}$ is the empty vector and therefore its length is always $0$. $\mathit{Cons}$ adds an element to a vector of some arbitrary length $n$, resulting in a vector of length $n+1$.
+\task{GHC provides type-level booleans out-of-the-box for us. With \texttt{\small -XDataKinds} enabled, the \texttt{\small Bool} type is automatically promoted to a kind and its data constructors, \haskellIn{True} and \haskellIn{False}, are automatically promoted to types. Try running the following commands in the REPL:}
+\begin{itemize}
+	\item \texttt{\small :k Bool} 
+	\item \texttt{\small :t True} 
+	\item \texttt{\small :k True} 
+\end{itemize}
 
-%\textbf{Task}: Write a function $\mathit{elem}$ which determines if a vector contains a given element.
+\task{Define a closed type family \texttt{\small Not} which performs boolean negation at the type-level.}
 
-\textbf{Task}: Write a function $\mathit{vhead}$ which returns the head of a non-empty vector.
+\task{Once defined, you should be able to experiment with the REPL commands that are described above. Try the following:}
+\begin{itemize}
+	\item \texttt{\small :k Not}
+	\item \texttt{\small :k Not True}
+	\item \texttt{\small :kind!~Not True}
+\end{itemize}
 
-\textbf{Task}: Write a function $\mathit{vappend}$ which concatenates two vectors.
+\taskLine
 
-\textbf{Task}: Write a function $\mathit{vzip}$ which behaves like $\mathit{zip}$ but for two vectors.
+\task{Modify the definition of \texttt{\small SBool} to define a singleton type for booleans. This type should have kind \texttt{\small Bool -> *} and two constructors named \haskellIn{STrue} and \haskellIn{SFalse} with appropriate types. Once you have defined this type, verify in the REPL that the type has the correct kind and that the constructors have the correct types. The unit tests will also ensure that \haskellIn{STrue} and \haskellIn{SFalse} have the correct types.}
 
-\subsubsection{Reifying type-indexed vectors}
+\task{Having a singleton type for booleans is useful as we can now keep track of the value of a boolean variable at the type-level and therefore at compile-time. This allows us to define functions of types such as:}
+\begin{minted}{haskell}
+inot :: SBool b -> SBool (Not b)
+\end{minted}
+That is, given a value of type \texttt{\small SBool b} where \texttt{\small b} is a type of kind \texttt{\small Bool} corresponding to the value, \haskellIn{inot} should return a boolean whose value is the negation of \texttt{\small b}. Implement this function now so that we get the expected behaviour:
+\begin{minted}{haskell}
+inot STrue  ==> SFalse 
+inot SFalse ==> STrue
+\end{minted}
+While this is not very interesting on the term-level, what happens if you ask the REPL for the types of these expressions?
+\begin{itemize}
+	\item \texttt{\small :t inot STrue}
+	\item \texttt{\small :t inot SFalse}
+\end{itemize}
 
-\emph{Reification} refers to the process of turning a type into a term-level value. For example, since our vectors are indexed by their length on the type-level, we might like to use that information at the term-level.
+\task{Could you define similar functions for other boolean operations?}
 
+\task{Given a type that is known at compile-time, we may wish to convert it to a corresponding value on the value-level. This process is in general known as \emph{reification} and can be accomplished with the help of a suitable type class. We now want to do this for type-level booleans. You are already given the definition of a suitable type class, named \haskellIn{KnownBool}. Implement suitable instances of this type class so that \haskellIn{boolVal} can be used in the following ways:}
+\begin{minted}{haskell}
+boolVal (Proxy :: Proxy True)  ==> True
+boolVal (Proxy :: Proxy False) ==> False
+\end{minted}
 
+\taskLine
 
-%\textbf{Task}: Write a function $\mathit{vlength}$ of type $\mathit{KnownNat}~n \Rightarrow \mathit{Vector}~n~a \to $
+\task{GHC also provides type-level lists out-of-the-box for us when \texttt{\small -XDataKinds} is enabled. Try the following in the REPL:}
+\begin{itemize}
+	\item \texttt{\small :k []}
+	\item \texttt{\small :t (:)}
+	\item \texttt{\small :t []}
+	\item \texttt{\small :k '[]}
+	\item \texttt{\small :k (:)}
+	\item \texttt{\small :k Int :~'[]}
+\end{itemize}
 
-\subsubsection{Constructing type-indexed vectors}
+\taskLine 
 
-A singleton type is a type which only has one corresponding value. For example, the unit type $()$ is a singleton type because there is only one value of this type, the unit value $()$. However, most types can be turned into singletons. For example, we can turn natural numbers into
-\begin{displaymath}
-\begin{array}{l}
-\mathbf{data}~\mathit{SNat}~(n :: \mathit{Nat})~\mathbf{where} \\
-\quad \begin{array}{lcl}
-\mathit{SZero} & :: & \mathit{SNat}~0 \\
-\mathit{SSucc} & :: & \mathit{SNat}~n \to \mathit{SNat}~(n+1)
-\end{array}
-\end{array}
-\end{displaymath}
-$\mathit{SZero}$ is the only value of type $\mathit{SNat}~0$, $\mathit{SSucc}~\mathit{SZero}$ is the only value of $\mathit{SNat}~1$, $\mathit{SSucc}~(\mathit{SSucc}~\mathit{SZero})$ is the only value of $\mathit{SNat}~2$, and so on. This allows us to write functions whose types are parametrised by the values the function is given as arguments. 
+The aim of this last part of the lab is to implement \emph{heterogeneous lists} in Haskell. The ``ordinary'' lists that we have come across in Haskell are homogeneous: that is, every element has the same type. For example, the following is a valid list in Haskell because all elements have the same type:
+\begin{minted}{haskell}
+[4,8,15,16,23,42] :: [Int]
+\end{minted}  
+However, the following is not a valid list in Haskell because its elements have different types:
+\begin{minted}{haskell}
+[True,"Duck"] -- not well typed
+\end{minted} 
+This is because lists in Haskell need to be parametrised by the element type: the list type constructor \texttt{\small []} has kind \haskellIn{* -> *}. The definition of lists assumes that every element has that type:
+\begin{minted}{haskell}
+[]  :: [a]
+(:) :: a -> [a] -> [a]
+\end{minted} 
+In order to implement lists where the elements can have different types, we need to be able to parametrise a list by the types of all of its elements. In other words, we need a type constructor of kind \texttt{\small [*] -> *}. That is, a type constructor which requires a list of types as argument.
 
-\textbf{Task}: Write a function $\mathit{vreplicate}$ which behaves like $\mathit{replicate}$, but for type-indexed vectors. 
+\task{With the help of type-level lists, complete the definition of \texttt{\small HList} so that it has two constructors: \haskellIn{HNil} which represents an empty, heterogeneous list and \haskellIn{HCons} which adds an element to a heterogeneous list. Some examples of what should work successfully in the REPL once you are done:}
+\begin{minted}{haskell}
+*Lab10 Lab10> :t HNil
+HNil :: HList '[]
+*Lab10 Lab10> :t HCons True HNil
+HCons True HNil :: HList '[Bool]
+*Lab10 Lab10> :t HCons 4 (HCons True HNil)
+HCons 4 (HCons True HNil) :: Num a => HList '[a, Bool]
+\end{minted}
+
+\task{Implement the \haskellIn{hhead} function, which should work just like \haskellIn{head} does on ordinary lists, but for heterogeneous lists.}
+
+\task{Define suitable instances of the \haskellIn{Show} type class so that we can use the \haskellIn{show} function on heterogeneous lists. For example:}
+\begin{minted}{haskell}
+show HNil                          ==> "[]"
+show (HCons 4 HNil)                ==> "4 : []"
+show (HCons "cake" (HCons 4 HNil)) ==> "\"cake\" : 4 : []"
+\end{minted}

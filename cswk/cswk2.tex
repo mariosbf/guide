@@ -2,7 +2,7 @@
 % submission details
 \newcommand{\deadlineTwoTime}{noon}
 \newcommand{\deadlineTwoDate}{14 March 2019}
-\newcommand{\submissionTwoURL}{https://tabula.warwick.ac.uk/coursework/submission/8abd8604-d71b-454d-a0c9-c315cec10a36}
+\newcommand{\submissionTwoURL}{https://tabula.warwick.ac.uk/coursework/submission/df8197f0-faf5-4d4d-8918-c3a3ab90fb0e}
 
 
 %\renewcommand{\instructions}{Due at \emph{\deadlineTime} on \emph{\deadlineDate}.}
@@ -40,10 +40,31 @@ Expressions in the language represented by $\mathit{Expr}$ consist of the additi
 
 \section{Getting started}
 
-Clone the skeleton code for this coursework onto your machine:
+In order to get started with the coursework, you need to get hold of the skeleton code and ensure that it compiles successfully. 
+
+\subsection{Obtaining the skeleton code}
+
+There are three different ways in which you can obtain the skeleton code for this coursework, which are all explained below alongside their advantages and disadvantages:
+
+\paragraph{Option A: Private fork} By following the GitHub Classroom link below, you can create a private fork of our git repository with the skeleton code. This requires a GitHub account, but has the advantage that you have your own private copy of our repository on GitHub that you can write to. That would allow then you to work easily share your work between machines in the labs and at home:
+\begin{center}
+	\url{https://classroom.github.com/a/5TvwO1Xl}
+\end{center}
+Once you have accepted the assignment, you can then clone your fork of the skeleton code to your machine with the usual \bashIn{git clone} command where \texttt{\small [username]} is your GitHub username:
+\begin{minted}{bash}
+$ git clone https://github.com/fpclass/1819-cswk2-[username]
+\end{minted}
+
+\paragraph{Option B: Clone} If you do not wish to create a GitHub account or host a copy of your repository there, then you could instead just clone our repository with:
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/cswk2
 \end{minted}
+You will be able to \bashIn{git commit} changes to your local copy of the repository, but you will not be able to \bashIn{git push} them. This is sufficient if you are only planning to work on the coursework from one place (\emph{e.g.} only the lab machines but not your personal computer).
+
+\paragraph{Option C: Archive} If GitHub should be unavailable or you do not have \bashIn{git} installed your machine, you can download a \texttt{\small .zip} file with the skeleton code from the module website.
+
+\subsection{Working with the skeleton code}
+
 The code should compile out of the box. You can test this by running:
 \begin{minted}{bash}
 $ stack build
@@ -117,7 +138,13 @@ Complete the definition of the \haskellIn{interpret} function in \texttt{\small 
 		If a division by zero is attempted, the corresponding error should be returned. \emph{I.e.} \haskellIn{Left DivByZeroError} \\ \hline
 	\end{longtable}
 \end{center}
-Internally, logic operators should evaluate to $0$ if false and $1$ if true. If an attempt is made to read from a variable which is not in the memory, then the corresponding error should be returned.
+There are some details to look out for:
+\begin{itemize}
+	\item Internally, logic operators should evaluate to $0$ if false or a non-zero value if true. All numeric values other than $0$ should be treated as true.
+	\item If an attempt is made to read from a variable which is not in the memory, then the corresponding error should be returned.
+	\item Expressions can be nested arbitrarily deep and expressions of arbitrary complexity may appear in any place where expressions are expected.
+	\item Errors can arise almost anywhere and should be propagated properly.
+\end{itemize}
 
 Running \bashIn{stack test} will give you a rough indication of how complete your solution is. Running \bashIn{stack bench} will benchmark your code.
 

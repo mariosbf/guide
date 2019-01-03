@@ -2,7 +2,7 @@
 % submission details
 \newcommand{\deadlineOneTime}{noon}
 \newcommand{\deadlineOneDate}{7 February 2019}
-\newcommand{\submissionOneURL}{https://tabula.warwick.ac.uk/coursework/submission/a98ab001-55e8-4ab8-87d3-666b6333db42}
+\newcommand{\submissionOneURL}{https://tabula.warwick.ac.uk/coursework/submission/1905b143-7b68-4f61-bf2d-5288934c6253}
 
 %\renewcommand{\instructions}{Due at \emph{\deadlineTime} on \emph{\deadlineDate}.}
 
@@ -29,10 +29,31 @@ For example, for the above guess, the codebreaker would score one white marker f
 
 \section{Getting started}
 
-The skeleton code for this coursework is on GitHub. You can clone it onto your machine by running the following command in your shell (terminal):
+In order to get started with the coursework, you need to get hold of the skeleton code and ensure that it compiles successfully. 
+
+\subsection{Obtaining the skeleton code}
+
+There are three different ways in which you can obtain the skeleton code for this coursework, which are all explained below alongside their advantages and disadvantages:
+
+\paragraph{Option A: Private fork} By following the GitHub Classroom link below, you can create a private fork of our git repository with the skeleton code. This requires a GitHub account, but has the advantage that you have your own private copy of our repository on GitHub that you can write to. That would allow then you to work easily share your work between machines in the labs and at home:
+\begin{center}
+	\url{https://classroom.github.com/a/gD7o5fXq}
+\end{center}
+Once you have accepted the assignment, you can then clone your fork of the skeleton code to your machine with the usual \bashIn{git clone} command where \texttt{\small [username]} is your GitHub username:
+\begin{minted}{bash}
+$ git clone https://github.com/fpclass/1819-cswk1-[username]
+\end{minted}
+
+\paragraph{Option B: Clone} If you do not wish to create a GitHub account or host a copy of your repository there, then you could instead just clone our repository with:
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/cswk1
 \end{minted}
+You will be able to \bashIn{git commit} changes to your local copy of the repository, but you will not be able to \bashIn{git push} them. This is sufficient if you are only planning to work on the coursework from one place (\emph{e.g.} only the lab machines but not your personal computer).
+
+\paragraph{Option C: Archive} If GitHub should be unavailable or you do not have \bashIn{git} installed your machine, you can download a \texttt{\small .zip} file with the skeleton code from the module website.
+
+\subsection{Working with the skeleton code}
+
 You may wish to verify that the code compiles and that all tests fail by entering the \texttt{\small cswk1} directory that was created and running \bashIn{stack test}:
 \begin{minted}{bash}
 $ cd cswk1

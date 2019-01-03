@@ -50,17 +50,19 @@ There is a \texttt{\small src/Lab1.hs} file in the \texttt{\small lab1} director
 52
 \end{minted}
 
-\task{Open the \texttt{\small src/Lab1.hs} file and modify the definitions of \haskellIn{age} and \haskellIn{name} to match your name and age.}
+\task{At this point you may wish to read \Cref{ch:tools} if you have not done so already and set up your text editor to suit your preferences. If you are using Atom, the \bashIn{haskell-setup.sh} script you ran earlier will already have installed some Haskell-related plugins for you.}
+
+\task{Open the \texttt{\small src/Lab1.hs} file in your preferred text editor and modify the definitions of \haskellIn{age} and \haskellIn{name} to match your name and age.}
 
 Instead of typing an expression which should be evaluated by the REPL, you may also type in a command (all commands start with a colon). The following commands are supported (among others):
 \begin{center}
 \begin{tabular}{|l|l|}
 \hline 
-    \texttt{:q}   & Quits the REPL. \\ 
+    \texttt{\small :q}   & Quits the REPL. \\ 
 \hline 
-    \texttt{:r}  & Reloads all files that are currently loaded. \\ 
+    \texttt{\small :r}  & Reloads all files that are currently loaded. \\ 
 \hline 
-    \texttt{:l FILENAME} & Loads \texttt{FILENAME} into the REPL. \\
+    \texttt{\small :l FILENAME} & Loads \texttt{\small FILENAME} into the REPL. \\
 \hline
 \end{tabular} 
 \end{center}
