@@ -259,7 +259,7 @@ rev :: [a] -> [a] -> [a]
 rev []     ys = ys
 rev (x:xs) ys = rev xs (x:ys)
 \end{minted} 
-This function is much more efficient than our old definition of $\mathit{reverse}$ and more general. We can restore the behaviour of $\mathit{reverse}$ by defining in terms of $\mathit{rev}$ as follows:
+This function is much more efficient than our old definition of $\mathit{reverse}$ and more general. We can restore the behaviour of $\mathit{reverse}$ by defining it in terms of $\mathit{rev}$ as follows:
 \begin{minted}{haskell}
 reverse :: [a] -> [a] 
 reverse xs = rev xs []
