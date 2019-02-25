@@ -21,7 +21,7 @@ fmap (map (=='o')) (Identity "foo")
 ==> Identity [False,True,True]
 \end{minted} 
 
-\task{Once you have implemented \haskellIn{fmap}, you may wish to verify that your instance of \haskellIn{Functor} for \texttt{\small Identity} obeys the functor laws. Running the tests with \bashIn{stack test} will give you some indication, but you could also do it formally with some proofs by induction for the two functor laws.}
+\task[task:identity-functor]{Once you have implemented \haskellIn{fmap}, you may wish to verify that your instance of \haskellIn{Functor} for \texttt{\small Identity} obeys the functor laws. Running the tests with \bashIn{stack test} will give you some indication, but you could also do it formally with some proofs by induction for the two functor laws.}
 
 \taskLine 
 
@@ -37,7 +37,7 @@ fmap (map (=='o')) (Const "foo") ==> Const "foo"
 \end{minted} 
 As we can see, the ``effect'' of this functor is that it always preserves the values stored inside of it and the function we apply with \haskellIn{fmap} does nothing. 
 
-\task{You may again wish to convince yourself that your implementation of \haskellIn{fmap} for this type obeys the functor laws.}
+\task[task:const-functor]{You may again wish to convince yourself that your implementation of \haskellIn{fmap} for this type obeys the functor laws.}
 
 \taskLine 
 
@@ -65,7 +65,7 @@ fmap length p3 ==> Point 5 5
 \end{minted}
 As you can see, having \haskellIn{fmap} available for a type allows us to perform quite the range of operations on values of the \texttt{\small Point} type.
 
-\task{You may once again wish to verify that your instance of \haskellIn{Functor} for \texttt{\small Point} obeys the functor laws.}
+\task[task:point-functor]{You may once again wish to verify that your instance of \haskellIn{Functor} for \texttt{\small Point} obeys the functor laws.}
 
 \taskLine \pagebreak
 
@@ -103,7 +103,7 @@ fmap (+5) (Compose (Compose [[[1,2],[3]], [[4],[5,6]]]))
 ==> Compose (Compose [[[6,7],[8]],[[9],[10,11]]])
 \end{minted}
 
-\task{Proving that \haskellIn{fmap} for \texttt{\small Compose} obeys the functor laws is significantly more interesting than for the previous types. Can you do it? \emph{Hint}: you need to assume that the two underlying functors obey the laws and make use of them.}
+\task[task:compose-functor]{Proving that \haskellIn{fmap} for \texttt{\small Compose} obeys the functor laws is significantly more interesting than for the previous types. Can you do it? \emph{Hint}: you need to assume that the two underlying functors obey the laws and make use of them.}
 
 \taskLine \pagebreak
 
