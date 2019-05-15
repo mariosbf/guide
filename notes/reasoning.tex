@@ -109,13 +109,13 @@ As shown above, natural numbers can be defined inductively in a way which closel
 Lists in Haskell are also defined as an algebraic data type and they can also be defined inductively as:
 \begin{itemize}
 \item $\hslist{} :: \hslist{a}$
-\item $\forall x :: a. \forall \mathit{xs} :: \hslist{a}.x:\mathit{xs} \in \hslist{a}$
+\item $\forall x :: a. \forall \mathit{xs} :: \hslist{a}.x:\mathit{xs} :: \hslist{a}$
 \end{itemize}
 An algebraic data type for lists could be expressed in Haskell as:
 \begin{displaymath}
 \mathbf{data}~\mathit{List}~a = \mathit{Empty} \mid \mathit{Cons}~a~(\mathit{List}~a)
 \end{displaymath}
-Note that Haskell's bult-in list type is just an algebraic data type as well which is defined exactly like the $\mathit{List}$ type above, except with different names for the type and two constructors.
+Note that Haskell's built-in list type is just an algebraic data type as well which is defined exactly like the $\mathit{List}$ type above, except with different names for the type and two constructors.
 \paragraph{Map fusion} In Haskell, it is common to define functions as the composition of several, smaller functions. However, if executed literally, such functions are obviously very inefficient because each function would generate intermediate results which are then immediately consumed by the next function in the chain. The Haskell compiler performs an optimisation known as \emph{fusion} which turns multiple loops over \emph{e.g.} a list into one and eliminates intermediate lists. For example, mapping a function $g$ over a list and then mapping a function $f$ over the resulting list is the same as composing $f$ and $g$ and mapping the resulting function over the list:
 \begin{displaymath}
 \forall f :: b \to c, g :: a \to b, \mathit{xs} :: \hslist{a}~.\quad \mathit{map}~f~(\mathit{map}~g~\mathit{xs}) = \mathit{map}~(f \circ g)~\mathit{xs}
