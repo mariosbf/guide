@@ -77,12 +77,13 @@ You will be able to \bashIn{git commit} changes to your local copy of the reposi
 
 \subsection{Working with the skeleton code}
 
-You may wish to verify that the code compiles and that all tests fail by entering the \texttt{\small cswk1} directory that was created and running \bashIn{stack test}:
-\begin{minted}{bash}
+You may wish to verify that the code compiles and that all tests fail by entering the \texttt{\small large-arithmetic-collider} directory that was created and running \texttt{\small stack test}:
+\begin{minted}{text}
 $ cd large-arithmetic-collider
 $ stack test
 \end{minted}
-Running \bashIn{stack test} will compile your code, run a bunch of unit tests on it, and give you a rough indication of how complete your solution is (the more tests pass, the more complete it is). Running \bashIn{stack bench} will run a set of benchmarks on your code. You can also use \bashIn{stack build} to just compile your code and then \bashIn{stack exec mastermind} to run the program. Alternatively, you can run \bashIn{stack repl} to load up the REPL, which is useful for debugging.
+Running \texttt{\small stack test} will compile your code, run a bunch of unit tests on it, and give you a rough indication of how complete your solution is (the more tests pass, the more complete it is). %Running \bashIn{stack bench} will run a set of benchmarks on your code. 
+You can also use \bashIn{stack build} to just compile your code and then \texttt{\small stack exec collider} to run the program. Alternatively, you can run \bashIn{stack repl} to load up the REPL, which is useful for debugging.
 
 The skeleton code contains a bunch of files, most of which you do not need to touch. The most important file is \texttt{\small src/Game.hs} which contains the definitions you will need to complete in order to implement the game. There are some definitions to get you started. Firstly, the arithmetic operations that may be contained in cells of the grids are represented as an algebraic data type where each constructor represent one type of operation:
 \begin{minted}{haskell}
@@ -156,13 +157,13 @@ Examples of what is not acceptable in the context of this assignment include, bu
 
 This coursework is worth 15\% of the overall module mark. It will be marked out of 100\% as follows:
 \begin{itemize}
-	\item 20\% for \emph{correctness and documented understanding (basic grids)}. You gain full marks here if all parts of the coursework required to solve basic grids (up to and including the \haskellIn{solve} function) been attempted and are correct. You may use \bashIn{stack test} as a rough indication for whether this is the case, but there are some things the unit tests do not test for, so you should play the game and ensure that everything works as described. You should also document your code with comments and explain how it works. You gain full marks if all code is documented and explained sufficiently well so that someone who is unfamiliar with your code can understand it.
+	\item 20\% for \emph{correctness and documented understanding (basic grids)}. You gain full marks here if all parts of the coursework required to solve basic grids (up to and including the \haskellIn{solve} function) been attempted and are correct. You may use \texttt{\small stack test} as a rough indication for whether this is the case, but there are some things the unit tests do not test for, so you should play the game and ensure that everything works as described. You should also document your code with comments and explain how it works. You gain full marks if all code is documented and explained sufficiently well so that someone who is unfamiliar with your code can understand it.
 	
 	\item 20\% for \emph{correctness and documented understanding (advanced grids)}. You gain full marks here if all parts of the coursework required to solve advanced grids (the \haskellIn{steps} function) been attempted and are correct. You may use \texttt{\small stack test} as a rough indication for whether this is the case, but there are some things the unit tests do not test for, so you should play the game and ensure that everything works as described. You should also document your code with comments and explain how it works. You gain full marks if all code is documented and explained sufficiently well so that someone who is unfamiliar with your code can understand it.
 	
 	\item 20\% for \emph{elegance}. Definitions should be concise and readable, new functions should be introduced where needed, existing library functions used when applicable, etc.
 	 
-	\item 20\% for \emph{performance and efficiency}. You will do well here if you use sensible data structures and your functions perform as little redundant computation as possible. You can test performance by running \texttt{\small stack bench} on different versions of your code to see how they compare. 
+	\item 20\% for \emph{performance and efficiency}. To do well here, you need to use sensible data structures and your functions should perform as little redundant computation as possible. In your comments, you must also discuss what you have done to test your solution's performance and what you have tried to improve it. %You can test performance by running \bashIn{stack bench} on different versions of your code to see how they compare.  
 	
 	\item 20\% for \emph{improvements and extensions}. This is an opportunity for you to demonstrate creativity and advanced understanding. You could achieve this in many different ways, such as adding additional unit tests, functionality, improved algorithms, etc. You may wish to modify \texttt{\small app/Main.hs} as well as other source files or even add new ones. You could also prove some properties about your game on paper. The amount of marks awarded will depend on the complexity and creativity of your extension(s) and improvement(s).
 \end{itemize}
