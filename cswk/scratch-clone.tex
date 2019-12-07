@@ -2,13 +2,15 @@
 % submission details
 \newcommand{\deadlineTwoTime}{noon}
 \newcommand{\deadlineTwoDate}{13 March 2020}
-\newcommand{\submissionTwoURL}{https://tabula.warwick.ac.uk/coursework/submission/0d913a74-f440-4f72-afd4-d84cb6ada99a}
+\newcommand{\submissionTwoURL}{https://tabula.warwick.ac.uk/coursework/submission/0a00dc0e-23b7-437a-9c6b-62ad4380bad1}
 
 
 %\renewcommand{\instructions}{Due at \emph{\deadlineTime} on \emph{\deadlineDate}.}
 
 \cleardoublepage
-\chapter{Coursework II: Scratch clone}
+\chapter{Coursework II}
+
+\section{Scratch clone}
 
 Scratch\footnote{\url{https://scratch.mit.edu/}} is a visual programming language designed to teach programming to children in a fun and graphical way. Programs in Scratch are built by arranging blocks that correspond to different syntactic constructs and connecting them like puzzle pieces. The tool is free to use so you can give it a go if you want! To give you an idea of what it looks like, here is a screenshot of Pac-Man built in Scratch running on a Raspberry Pi:
 
@@ -65,7 +67,7 @@ The code should compile out of the box. You can test this by running:
 $ stack build
 \end{minted}
 To start the program, you should run the following:
-\begin{minted}{bash}
+\begin{minted}{text}
 $ stack exec scratch-clone
 Starting web server...
 Started. Press any key to quit.
@@ -141,16 +143,35 @@ There are some details to look out for:
 	\item Errors can arise almost anywhere and should be propagated properly.
 \end{itemize}
 
-Running \bashIn{stack test} will give you a rough indication of how complete your solution is. Running \bashIn{stack bench} will benchmark your code.
+Running \texttt{\small stack test} will give you a rough indication of how complete your solution is. Running \bashIn{stack bench} will benchmark your code.
+
+%-----------------------------------------------------------
+
+\section{Originality \& academic practice}
+
+This coursework is an individual assignment and the work you submit must be entirely your own work. Students are expected to be familiar with the departmental Student Handbook as well as applicable university regulations. The ``Cheating and Plagiarism'' section on the handbook page about coursework is particularly relevant:
+\begin{center}\small
+	\url{https://warwick.ac.uk/fac/sci/dcs/teaching/handbook/coursework/}
+\end{center}
+Examples of what is not acceptable in the context of this assignment include, but are not limited to, the following:
+\begin{itemize}
+	\item Collaborating with others, for example by sharing code, looking at other people's code, or discussing implementation details such as which functions you used to implement a particular definition. 
+	
+	\item Copying or adapting code from web sources such as Stack Overflow, GitHub, etc. without attribution. This includes taking code written in other programming languages and translating it to Haskell. You may do this if you include a correct attribution to the source in e.g. a comment in your file, but note that you can only be awarded marks for work you have done yourself. 
+\end{itemize}
 
 \section{Marking \& submission}
 
 This coursework is worth 25\% of the overall module mark. It will be marked out of 100\% as follows:
 \begin{itemize}
 	\item 20\% for \emph{correctness}. You gain full marks here if all parts of the coursework have been attempted and are correct. You may use \bashIn{stack test} as a rough indication for whether this is the case, but there are some things the unit tests do not test for, so you should construct programs in the scratch clone and ensure that everything works as described.
+	
 	\item 20\% for \emph{documented understanding}. You should document your code with comments and explain how it works. You gain full marks if all code is documented and explained sufficiently well so that someone who is unfamiliar with your code can understand it.
+	
 	\item 20\% for \emph{elegance}. Definitions should be concise and readable, new functions should be introduced where needed, existing library functions used when applicable, monads used where possible, etc. 
-	\item 20\% for \emph{performance and efficiency}. You will do well here if you use sensible data structures and your functions perform as little redundant computation as possible. You can test performance by running \bashIn{stack bench} on different versions of your code to see how they compare. 
+	
+	\item 20\% for \emph{performance and efficiency}. To do well here, you need to use sensible data structures and your functions should perform as little redundant computation as possible. In your comments, you must also discuss what you have done to test your solution's performance and what you have tried to improve it. You can test performance by running \bashIn{stack bench} on different versions of your code to see how they compare. 
+	
 	\item 20\% for \emph{improvements and extensions}. This is an opportunity for you to demonstrate creativity and advanced understanding. You could achieve this in many different ways, such as adding additional unit tests, functionality, improved algorithms, etc. You may wish to modify \texttt{\small exe/Main.hs} as well as other source files or even add new ones. You could also prove some properties about your interpreter on paper. The amount of marks awarded will depend on the complexity and creativity of your extension(s) and improvement(s).
 \end{itemize}
 Submit a \texttt{\small .zip} or \texttt{\small .tar.gz} archive of the whole, completed project (not just \texttt{\small Interpreter.hs}) through Tabula by \deadlineTwoTime\ on \deadlineTwoDate:
