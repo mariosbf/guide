@@ -28,6 +28,8 @@
 \usepackage{pgfplots}
 \usepackage[strict]{changepage}
 \usepackage{graphbox}
+\usepackage{prerex}
+\usepackage{forest}
 
 % Minted -------------------------------
 
@@ -214,7 +216,11 @@ backgroundcolor = gray!5
 \cleardoublepage
 \chapter{Labs}
 
-This chapter contains exercises for the CS141 lab sessions. Each section in this chapter contains exercises which roughly correspond to the lecture content for the respective week or the one preceding it. Due to the timetabling of labs this year, you may have your timetabled lab session before the respective content is covered in the lectures. Do not worry about this though and just work on the exercises that you know how to do. Alternatively you can also work on the coursework. CS141 labs are very informal and should primarily be fun! There is no expectation that you complete all exercises every week and you are welcome to work on anything you like at whatever pace you like. We do take a register to keep track of attendance, but do not worry if you cannot make it to a lab because of illness or some other reason. If you have missed a lab, you are welcome to come to another lab session if you would like provided that there are spaces.
+This chapter contains exercises for the CS141 lab sessions. Each section in this chapter corresponds to one topic from the lectures. You can find recommendations for which sets of exercises to complete after a given lecture on the module website and recommendations for each week of term in \Cref{sec:timeline}. There is no expectation for you to complete all exercises and you may indeed wish to leave some for revision. If you are not following the order in which the exercises are presented in this guide, the graph below shows prerequisite dependencies between labs:
+
+\input{labs/dependencies.tex}
+
+CS141 lab sessions should primarily be fun! Make use of them to practice the skills we cover in the lectures and to ask questions. We do take a register to keep track of attendance, but if you should miss a lab \emph{e.g.} due to illness, you are welcome to come to another lab session of your choice provided that there is space.
 
 %\input{lectures/lecture1.tex}
 %\input{lectures/lecture2.tex}
