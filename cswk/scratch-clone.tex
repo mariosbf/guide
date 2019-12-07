@@ -1,8 +1,8 @@
 
 % submission details
 \newcommand{\deadlineTwoTime}{noon}
-\newcommand{\deadlineTwoDate}{14 March 2019}
-\newcommand{\submissionTwoURL}{https://tabula.warwick.ac.uk/coursework/submission/df8197f0-faf5-4d4d-8918-c3a3ab90fb0e}
+\newcommand{\deadlineTwoDate}{13 March 2020}
+\newcommand{\submissionTwoURL}{https://tabula.warwick.ac.uk/coursework/submission/0d913a74-f440-4f72-afd4-d84cb6ada99a}
 
 
 %\renewcommand{\instructions}{Due at \emph{\deadlineTime} on \emph{\deadlineDate}.}
@@ -24,19 +24,14 @@ The goal of this coursework is to implement a simple clone of Scratch. Our clone
 Your task is to complete the part of the Haskell program responsible for evaluating programs -- in other words, you have to write an \emph{interpreter}.
 
 An interpreter is a program which, given some representation of a program as argument, evaluates it. To illustrate this idea, a Haskell implementation of an interpreter for a simple expression language is shown below:
-\begin{displaymath}
-\begin{array}{l}
-\begin{array}{lcl}
-\mathbf{data}~\mathit{Expr} & = & \mathit{Val}~\mathit{Int} \mid \mathit{Add}~\mathit{Expr}~\mathit{Expr}
-\end{array} \\\\
-\begin{array}{lcl}
-\mathit{eval} & :: & \mathit{Expr} \to \mathit{Int} \\
-\mathit{eval}~(\mathit{Val}~n) & = & n\\
-\mathit{eval}~(\mathit{Add}~l~r) & = & \mathit{eval}~l + \mathit{eval}~r
-\end{array}
-\end{array}
-\end{displaymath}
-Expressions in the language represented by $\mathit{Expr}$ consist of the addition operator and integer values. The $\mathit{eval}$ function is the interpreter for this language, which determines the value of a given expression.
+\begin{minted}{haskell}
+data Expr = Val Int | Add Expr Expr 
+
+eval :: Expr -> Int
+eval (Val n)   = n
+eval (Add l r) = eval l + eval r
+\end{minted}
+Expressions in the language represented by \haskellIn{Expr} consist of the addition operator and integer values. The \haskellIn{eval} function is the interpreter for this language, which determines the value of a given expression.
 
 \section{Getting started}
 
@@ -48,16 +43,16 @@ There are three different ways in which you can obtain the skeleton code for thi
 
 \paragraph{Option A: Private fork} By following the GitHub Classroom link below, you can create a private fork of our git repository with the skeleton code. This requires a GitHub account, but has the advantage that you have your own private copy of our repository on GitHub that you can write to. That would allow then you to work easily share your work between machines in the labs and at home:
 \begin{center}
-	\url{https://classroom.github.com/a/5TvwO1Xl}
+	\url{https://classroom.github.com/a/4aP_BvWI}
 \end{center}
 Once you have accepted the assignment, you can then clone your fork of the skeleton code to your machine with the usual \bashIn{git clone} command where \texttt{\small [username]} is your GitHub username:
 \begin{minted}{bash}
-$ git clone https://github.com/fpclass/1819-cswk2-[username]
+$ git clone https://github.com/fpclass/1920-cswk2-[username]
 \end{minted}
 
 \paragraph{Option B: Clone} If you do not wish to create a GitHub account or host a copy of your repository there, then you could instead just clone our repository with:
 \begin{minted}{bash}
-$ git clone https://github.com/fpclass/cswk2
+$ git clone https://github.com/fpclass/scratch-clone
 \end{minted}
 You will be able to \bashIn{git commit} changes to your local copy of the repository, but you will not be able to \bashIn{git push} them. This is sufficient if you are only planning to work on the coursework from one place (\emph{e.g.} only the lab machines but not your personal computer).
 
