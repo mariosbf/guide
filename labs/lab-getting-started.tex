@@ -1,0 +1,73 @@
+\section{Lab: Getting started}
+\topics{Definitions, functions, basic arithmetic expressions}
+
+The purpose of this lab is twofold: firstly, you will be checking that the tools you'll be using in the module are working correctly (predominantly \bashIn{stack} and \bashIn{git}), and becoming acquainted with how they work; and secondly you will encounter, compile, and improve on some existing Haskell code.
+
+% The goal of this first practical is twofold: firstly, you will learn to write some very simple Haskell programs and secondly, you will be able to familiarise yourself with the tools we use as part of this module, such as \bashIn{stack} to compile and test programs and \bashIn{git} for version control. The module guide contains instructions on how to use both programs.
+
+If you have not done so yet, you should set up your text editor of choice now. The instructions on how to do this are found in \Cref{sec:department-setup} and \Cref{sec:home-setup}). Most of the tools you will need are pre-installed on the departmental machines. If you are using one of the lab machines, you only need to open a shell (with the Terminal application on the lab machines), and run the following command to prepare the \bashIn{stack} tool for your user account:
+\begin{minted}{bash}
+$ /modules/cs141/haskell-setup.sh
+\end{minted}
+
+There is some skeleton code for most of the lab sessions, including this one. You can obtain the code for this practical by cloning it from GitHub:
+\begin{minted}{bash}
+$ git clone https://github.com/fpclass/lab-getting-started
+\end{minted}
+By default, this will create a folder named \texttt{\small lab-getting-started} in the current working directory (your home folder, by default) with the skeleton code in it. Once you have cloned the repository, you may wish to verify that \bashIn{stack} compiles it without any problems:
+\begin{minted}{bash}
+$ cd lab-getting-started
+$ stack run
+\end{minted}
+If everything goes well, you should see some output along the lines of:
+\begin{minted}{text}
+lab-getting-started-1.0.0.0: configure (lib)
+Configuring lab-getting-started-1.0.0.0
+lab-getting-started-1.0.0.0: build (lib)
+Preprocessing library lab-getting-started-1.0.00
+[1 of 1] Compiling LabGettingStarted      (src/LabGettin...)
+lab-getting-started-1.0.0.0: copy/register
+Installing library in ...
+Registering lab-getting-started-1.0.0.0
+\end{minted}
+and a window should open with a lovely cat picture. You are now ready to work on the exercises! 
+
+There is a \texttt{\small src/LabGettingStarted.hs} file in the \texttt{\small lab-getting-started} directory which contains some definitions for this lab. You should open the file in your text editor of choice (see \Cref{ch:tools} for information about the text editors available to you.) If you are using Atom, the \bashIn{haskell-setup.sh} script you ran earlier will already have installed some Haskell-related plugins.
+
+\taskLine
+\task[ex:open]{Open the \texttt{\small src/LabGettingStarted.hs} file in your preferred text editor. Take a look at the definition of \haskellIn{drawing}.}
+\taskLine
+
+The \texttt{\small hatch} library comes with a number of useful operators and expressions built-in:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+Function / Operator       & Description                                          \\ \hline
+\texttt{img1 <|> img2}    & Puts \mintinline{haskell}{img2} to the right of \mintinline{haskell}{img1}. \\
+\texttt{img1 <-> img2}    & Puts \mintinline{haskell}{img1} above \mintinline{haskell}{img2}.           \\
+\texttt{img1 <@> img2}    & Puts \mintinline{haskell}{img1} in front of \mintinline{haskell}{img2}.     \\
+\texttt{scale sf img2}    & Scales \mintinline{haskell}{img} by scale factor \mintinline{haskell}{sf}.  \\
+\texttt{offset tx ty img} & Moves \mintinline{haskell}{img}, \mintinline{haskell}{tx} pixels right and \mintinline{haskell}{ty} pixels up. \\
+\texttt{rotate deg img}   & Rotates \mintinline{haskell}{img} by \mintinline{haskell}{deg} degrees.     \\
+\texttt{mirror img}       & Reflects \mintinline{haskell}{img} through the y-axis.
+\end{tabular}
+\end{table}
+
+There are a number of pictures available, namely \texttt{cat}, \texttt{dog}, \texttt{duck}, \texttt{goose}, and \texttt{blank}. The standard mathematical operators (\haskellIn{+}, \haskellIn{-}, \haskellIn{*}) are also available, so you can perform calculations on values.
+
+Notice that the right hand side of \haskellIn{animation} depends on the parameter to the \haskellIn{animation} function, \haskellIn{t}, which is the number of ticks the animation has been running for.
+
+\taskLine
+\task[ex:visualisation]{Play around with the code in \texttt{LabGettingStarted.hs} and combine the operations and functions to make some creative animations!
+
+Here are some examples of things to try:
+
+\begin{itemize}
+    \item Turn the spinning cat into a spinning dog.
+    \item Make the goose moonwalk away from the ducks.
+    \item Make the spinning cat spin the other way.
+    \item Make the goose run twice as fast.
+    \item Hide the dog behind a giant duck.
+\end{itemize}
+}
