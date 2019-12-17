@@ -120,6 +120,9 @@ Complete all definitions in \texttt{\small src/Game.hs} so that the game works a
 	\item \haskellIn{eval :: Action -> Int -> Int}\\
 	This function should apply an arithmetic operation represented by an \haskellIn{Action} value to an accumulator and return the result. For example, \haskellIn{eval (Add 5) 10} should evaluate to \haskellIn{15}.
 	
+	\item \haskellIn{apply :: Cell -> Int -> Int}\\
+	This function should apply the arithmetic operation contained in a \haskellIn{Cell} value to an accumulator and return the result if the cell is enabled. For example, \haskellIn{eval (Cell True (Add 5) 10} should evaluate to \haskellIn{15} while \haskellIn{eval (Cell False (Add 5) 10} should evaluate to \haskellIn{10}.
+	
 	\item \haskellIn{result :: [Cell] -> Int}\\
 	This function should determine the result of evaluating all the enabled arithmetic operations in a list of cells, starting with $0$. For example, evaluating \haskellIn{result [Cell True (Add 3), Cell False (Add 5)]} should result in \haskellIn{3}.
 	
