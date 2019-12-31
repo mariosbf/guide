@@ -1,9 +1,9 @@
-\section{Lab 7: \practicalSixBTitle}
+\section{Applicative functors}
 \topics{Applicative functors, parsing.}
 
-This practical is about using applicative functors. As usual, you can obtain the skeleton code for this this lab by cloning the respective repository from GitHub:
+These exercises are about using applicative functors. As usual, you can obtain the skeleton code for this this lab by cloning the respective repository from GitHub:
 \begin{minted}{bash}
-$ git clone https://github.com/fpclass/lab7
+$ git clone https://github.com/fpclass/lab-applicatives
 \end{minted}
 The aim of this lab is to implement a small library for constructing \emph{parsers} as well as to build a parser for a small expression language. At the end of this lab, we will have a function called \haskellIn{parseAndEval} which, given a string representation of simple arithmetic expressions, will be able to convert them into a value of an \haskellIn{Expr} type which is then interpreted. The \haskellIn{parseAndEval} function may fail if the input string is not well formatted. Here are a few examples of how it will work:
 \begin{minted}{haskell}
