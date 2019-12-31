@@ -1,9 +1,9 @@
-\section{Lab 9: \practicalEightTitle}
+\section{Effectful Programming}
 \topics{Monads.}
 
 This practical is about monads. As usual, you can obtain the skeleton code for this this lab by cloning the respective repository from GitHub:
 \begin{minted}{bash}
-$ git clone https://github.com/fpclass/lab9
+$ git clone https://github.com/fpclass/lab-effectful-programming
 \end{minted}
 For your reference, the definition of the \haskellIn{Monad} type class is given below. A type \texttt{\small m} is a monad if it is an applicative functor and there is a function of type \texttt{\small m~a -> (a -> m~b) -> m~b} which satisfies the monad laws. This function is referred to as ``bind'' and denoted by the  \haskellIn{(>>=)} operator. In Haskell, we can overload the \haskellIn{(>>=)} operator for all types which are monads using a type class:
 \begin{minted}{haskell}
