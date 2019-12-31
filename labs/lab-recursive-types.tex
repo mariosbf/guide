@@ -1,10 +1,14 @@
-\section{Lab 4: \practicalFourTitle}
+\section{Recursive data types}
 \topics{Algebraic data types}
 
-This practical is about algebraic data types in Haskell. You can obtain the skeleton code for this lab by cloning the respective repository from GitHub:
+These exercises are about recursive data types in Haskell. You can obtain the skeleton code by cloning the respective repository from GitHub:
 \begin{minted}{bash}
-$ git clone https://github.com/fpclass/lab4
+$ git clone https://github.com/fpclass/lab-recursive-types
 \end{minted}
+Note that the skeleton code for these exercises will not initially compile and you need to complete some of the exercises first before it does. 
+
+\taskLine 
+
 In Haskell, binary trees may be represented using the following data type:
 \begin{minted}{haskell}
 data BinaryTree a = Leaf | Node (BinaryTree a) a (BinaryTree a)
