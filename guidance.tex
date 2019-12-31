@@ -18,11 +18,11 @@ You should do this before you do anything else.
 \section{Getting started on your own computer}
 \label{sec:home-setup}
 
-There are several ways in which you may install a Haskell distribution on your own machine.
+If you also want to work on your own machine, there are several ways in which you may install a Haskell distribution.
 
 \subsection{Option 1: Installation using Stack (recommended)}
 
-Download Haskell Stack from \url{https://docs.haskellstack.org/en/stable/README/}. There is a simple command you can run on Unix-based machines and there are installers for Windows. Once you have installed Stack, you can install the Haskell compiler, GHC, by running:
+Download the Haskell Stack from {\small \url{https://docs.haskellstack.org/en/stable/README/}}. There is a simple command you can run on Unix-based machines and there are installers for Windows. Once you have installed Stack, you can install the Haskell compiler, GHC, by running:
 \begin{minted}{bash}
 $ stack setup
 \end{minted}
@@ -30,7 +30,7 @@ That may take a few minutes to complete, but this is all you need to do.
 
 \subsection{Option 2: Haskell Platform}
 
-You can download the Haskell Platform from the \url{https://www.haskell.org/} website or from a package manager of choice (beware of old versions!). The Haskell Platform contains the Haskell compiler, GHC, as well as a comprehensive set of libraries. The downside to taking this approach is that the libraries which are contained in a release of the Haskell Platform may not be the most recent versions or you may not need all of them to begin with. Note that libraries can be installed on-the-fly at any time anyway, so there is no need to have a large set of them pre-installed. Also, you will still want to install Stack to help you with building, testing, and benchmarking practicals and coursework.
+You can download the Haskell Platform from the {\small \url{https://www.haskell.org/}} website or from a package manager of choice (beware of old versions!). The Haskell Platform contains the Haskell compiler, GHC, as well as a comprehensive set of libraries. The downside to taking this approach is that the libraries which are contained in a release of the Haskell Platform may not be the most recent versions or you may not need all of them to begin with. Note that libraries can be installed on-the-fly at any time anyway, so there is no need to have a large set of them pre-installed. Also, you will still want to install Stack to help you with building, testing, and benchmarking practicals and coursework.
 
 \subsection{Option 3: GHC only}
 
@@ -71,11 +71,11 @@ GHC typically compiles Haskell source files into executables or libraries. Howev
 \subsection{Haskell Stack} 
 \label{sec:stack}
 
-Haskell programs often consist of more than one source file, may depend on libraries which provide functionality that we do not wish to implement from scratch, have test suites, benchmarks, and so on. Haskell Stack is a tool which automates many of tasks related to GHC, such as downloading and installing GHC, managing and building projects, running unit tests, running benchmarks, etc. You can find more information about Stack at:
+Haskell programs, like programs written in other languages, typically consist of more than one source file, may depend on libraries which provide functionality that we do not wish to implement from scratch, have test suites, benchmarks, and so on. Haskell Stack is a \emph{build tool} which automates many of tasks related to GHC, such as downloading and installing different versions of GHC, managing and building projects, managing dependencies, running unit tests, running benchmarks, etc. You can find more information about Stack at:
 \begin{center}
 	\url{https://www.haskellstack.org}
 \end{center}
-Stack is already installed on the department's machines, but you need to run the following command in a terminal window to set it up on your user account:
+Stack is already installed on the departmental machines, but you need to run the following command in a terminal window to set it up on your user account:
 \begin{minted}{bash}
 $ /modules/cs141/haskell-setup.sh
 \end{minted}
@@ -101,11 +101,11 @@ This launches the GHCi REPL for your project so that you can experiment with you
 
 \subsection{Cabal}
 
-Cabal is Haskell's default package manager. We will not be using it in this module since Stack does everything Cabal does, but better. However, you should be aware of files with the \texttt{\small .cabal} extension. Stack uses these \texttt{\small .cabal} files in addition to its own \texttt{\small stack.yaml} file as project configuration. If you decide to use \emph{e.g.} additional libraries (\Cref{sec:hackage}), then you will need to list them in the relevant \texttt{\small .cabal} file.
+Cabal is Haskell's default package manager. We will not be using it in this module since Stack does everything Cabal does, but better. However, you should be aware of files with the \texttt{\small .cabal} extension. Stack uses a tool called \texttt{\small hpack} to generate these \texttt{\small .cabal} files from \texttt{\small package.yaml} which contain the project configuration, such as which dependencies to load. If you decide to use \emph{e.g.} additional libraries (\Cref{sec:hackage}), then you will need to list them in the relevant \texttt{\small package.yaml} file. We cover this process in detail in one of the lectures.
 
 \subsection{Prelude} 
 
-The \texttt{\small Prelude} is Haskell's standard library. It contains many useful types and functions which we will make use of. The \texttt{\small Prelude} is automatically imported into every Haskell module so you do not have to do anything to use it. You can find documentation for all the functions and types offered by the \texttt{\small Prelude} at:
+The \texttt{\small Prelude} is Haskell's standard library. It contains many useful types and functions which you will make use of in virtually every program. The \texttt{\small Prelude} is automatically imported into every Haskell module so you do not have to do anything to use it. You can find documentation for all the functions and types offered by the \texttt{\small Prelude} at:
 \begin{center}
 \url{http://hackage.haskell.org/package/base/docs/Prelude.html}
 \end{center}
@@ -126,11 +126,11 @@ If you are working on your own machine and want to install additional packages, 
 
 The skeleton code for all practicals and for all coursework is available as Git repositories which are hosted on GitHub at \url{https://github.com/fpclass/}. GitHub is one of several web services that allows you to host Git repositories online, along with \emph{e.g.} GitLab and BitBucket which are also popular. You are encouraged to use version control to obtain and maintain your code. If you have not had much exposure to version control using Git before, \emph{Pro Git} by Scott Chacon and Ben Straub is a very good reference book which is available for free at {\small \url{https://git-scm.com/book/en/v2}}. Below is a very quick reference of some of the most important commands you will use.
 
-To obtain the code for e.g. the first practical which is located in the \texttt{\small lab1} repository, you will want to run the following command on your machine once you have installed \texttt{\small git} (note that \texttt{\small git} is already installed by default on the lab machines, macOS, and many linux distributions):
+To obtain the code for e.g. the first practical which is located in the \texttt{\small lab-getting-started} repository, you will want to run the following command on your machine once you have installed \texttt{\small git} (note that \texttt{\small git} is already installed by default on the lab machines, macOS, and many linux distributions):
 \begin{minted}{bash}
-$ git clone https://github.com/fpclass/lab1
+$ git clone https://github.com/fpclass/lab-getting-started
 \end{minted}
-This will create a local copy of the \texttt{\small lab1} repository on your machine that you can modify. If you are planning to work on your practical or coursework from multiple locations (e.g. a machine in the lab and your personal machine), you may find it beneficial to create a GitHub account and \emph{fork} the relevant repositories to your account instead. This creates a copy of them on your GitHub account which can then be read from and written to form anywhere. You can fork repositories on the GitHub website by visiting e.g. {\small \url{https://github.com/fpclass/lab1}} once logged in and clicking the ``fork'' button. If you take this approach, you will still need to obtain a local copy of the repository on all machines you plan to work on by running the command shown above, but replacing \texttt{\small fpclass} with your GitHub username. 
+This will create a local copy of the \texttt{\small lab-getting-started} repository on your machine that you can modify. If you are planning to work on your practical or coursework from multiple locations (e.g. a machine in the lab and your personal machine), you may find it beneficial to create a GitHub account and \emph{fork} the relevant repositories to your account instead. This creates a copy of them on your GitHub account which can then be read from and written to form anywhere. You can fork repositories on the GitHub website by visiting e.g. {\small \url{https://github.com/fpclass/lab-getting-started}} once logged in and clicking the ``fork'' button. If you take this approach, you will still need to obtain a local copy of the repository on all machines you plan to work on by running the command shown above, but replacing \texttt{\small fpclass} with your GitHub username. 
 
 \textbf{WARNING}: do not fork the coursework repositories to your account as they will end up being public and you do not want everyone to be able to see your solutions! Use the links provided on the module website instead which will allow you to create private forks of the repositories.
 
@@ -206,7 +206,6 @@ Sometimes we do not need a full-blown IDE and installing \texttt{\small hie} can
 \begin{center}
 	\url{https://github.com/ndmitchell/ghcid}
 \end{center}
-\pagebreak
 The \texttt{\small ghcid} executable is already installed on the lab machines and you can invoke it by running the following in \emph{e.g.} a folder with a \texttt{\small stack.yaml} file in it:
 \begin{minted}{bash}
 $ /modules/cs141/bin/ghcid
