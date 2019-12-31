@@ -1,7 +1,7 @@
 \section{Effectful Programming}
 \topics{Monads.}
 
-This practical is about monads. As usual, you can obtain the skeleton code for this this lab by cloning the respective repository from GitHub:
+These exercises are about monads. As usual, you can obtain the skeleton code for the exercises by cloning the respective repository from GitHub:
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/lab-effectful-programming
 \end{minted}
@@ -21,6 +21,10 @@ Also for your reference, the monad laws are shown below:
 \textbf{Associativity} & \qquad & (m \bind f) \bind g & = & m \bind (\lambda x \to f~x \bind g)
 \end{array}
 \end{displaymath}
+
+\faBook~\emph{Recommended reading}: Chapters 12 and 13 of \emph{Learn you a Haskell} \citep{lipovaca2011learn} or Chapter 12 of \emph{Programming in Haskell} \citep{hutton2016programming}.
+
+\faBook~\emph{Further reading}: the use of monads in functional programming was popularised by \emph{Monads for functional programming} \citep{wadler1995monads}.
 
 \taskLine 
 
