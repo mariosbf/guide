@@ -97,7 +97,7 @@ parse ((\x y -> [x,y]) <$> ch isDigit <*> ch isDigit) "1x3"
 
 \taskLine
 
-\subsection{Alternatives}
+\subsubsection{Alternatives}
 
 When working with applicative functors, it is sometimes useful to express the notion of choice. For example, in the case of parsers, if one parser returns failure, we may want to try a different parser to see if it succeeds instead. The \haskellIn{Alternative} type class provides some functions and operators to support this idea:
 \begin{minted}{haskell}
@@ -143,7 +143,7 @@ parse (many (ch isDigit)) "123xyz" ==> Just ("123", "xyz")
 
 \taskLine
 
-\subsection{Parser combinators}
+\subsubsection{Parser combinators}
 
 We can now define some basic parsers for common things we might wish to do. We will later be able to combine these basic parsers into more sophisticated parsers. 
 
@@ -168,7 +168,7 @@ parse (between (ch (=='{')) (ch (=='}')) nat) "{123}"
 
 \taskLine 
 
-\subsection{Expression language}
+\subsubsection{Expression language}
 
 The final part of this exercise is to implement a parser for a small expression language using the parser combinators and type class instances we have implemented so far. Expressions in this language are represented by the following algebraic data type:
 \begin{minted}{haskell}
