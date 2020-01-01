@@ -13,7 +13,7 @@ All the tools we need for this module are already installed on the machines in t
 	\item It will make the \texttt{\small stack} tool work on your account (see \Cref{sec:stack} for what \texttt{\small stack} is).
 	\item It will install a number of Atom plugins (see \Cref{sec:dev-tools}) for you which will help you write Haskell programs in Atom. 
 \end{itemize}
-You should do this before you do anything else.
+You should do this before you do anything else and you only need to do this once.
 
 \section{Getting started on your own computer}
 \label{sec:home-setup}
@@ -22,9 +22,9 @@ If you also want to work on your own machine, there are several ways in which yo
 
 \subsection{Option 1: Installation using Stack (recommended)}
 
-Download the Haskell Stack from {\small \url{https://docs.haskellstack.org/en/stable/README/}}. There is a simple command you can run on Unix-based machines and there are installers for Windows. Once you have installed Stack, you can install the Haskell compiler, GHC, by running:
+Download the Haskell Stack from {\small \url{https://docs.haskellstack.org/en/stable/README/}}. There is a simple command you can run on Unix-based machines and there are installers for Windows. Once you have installed Stack, you can install the Haskell compiler, GHC. For best compatibility with the module and to save you time, you are encouraged to specify the resolver version that we use for the module this year:
 \begin{minted}{bash}
-$ stack setup
+$ stack setup --resolver=lts-14.12
 \end{minted}
 That may take a few minutes to complete, but this is all you need to do.
 
@@ -50,13 +50,13 @@ The Glasgow Haskell Compiler (GHC) is the most mature and feature-rich Haskell c
 \begin{center}
 	\url{https://www.haskell.org/ghc/}
 \end{center}
-GHC is already installed on the department's computers. You can invoke it simply by running \bashIn{ghc} in a terminal window. For example, suppose that we have a file named \texttt{\small Program.hs} with the following contents:
+GHC is already installed on the department's computers. You can invoke the version that \texttt{\small stack} installed simply by running \bashIn{stack exec ghc} in a terminal window. For example, suppose that we have a file named \texttt{\small Program.hs} with the following contents:
 \begin{minted}{haskell}
 main = putStrLn "Hello World!"
 \end{minted}
 In order to compile this program, you could run the following command in a terminal:
-\begin{minted}{bash}
-$ ghc Program.hs
+\begin{minted}{text}
+$ stack exec ghc -- Program.hs
 \end{minted}
 This would produce (among other things) an executable named \texttt{\small Program} that can then be run to produce the expected output:
 \begin{minted}{bash}
@@ -66,7 +66,7 @@ Hello World!
 
 \subsection{GHCi}
 
-GHC typically compiles Haskell source files into executables or libraries. However, it can also be used \emph{interactively} to provide you with a text-based user interface which lets you evaluate expressions that you type in, experiment with functions you have defined, etc. In this mode, GHC is referred to as GHCi, or GHC interactive. GHCi can be invoked by running \texttt{\small ghci} in a terminal window.
+GHC typically compiles Haskell source files into executables or libraries. However, it can also be used \emph{interactively} to provide you with a text-based user interface which lets you evaluate expressions that you type in, experiment with functions you have defined, etc. In this mode, GHC is referred to as GHCi, or GHC interactive. GHCi can be invoked by running \texttt{\small stack exec ghci} in a terminal window.
 
 \subsection{Haskell Stack} 
 \label{sec:stack}
@@ -85,8 +85,8 @@ Once you have obtained \emph{e.g.} the skeleton code for one of the labs, you ca
 \begin{minted}{bash}
 $ stack build
 \end{minted}
-This will invoke GHC to compile all of the source files. Any errors that occur during compilation will be reported to the standard output. Many of the labs and all of the coursework will come with a test suite. You can run the test suite by invoking:
-\begin{minted}{bash}
+This will invoke GHC to compile all of the source files and also link all dependencies specified in the project's \texttt{\small .cabal} file into the program. Any errors that occur during compilation will be reported to the standard output. Many of the labs and all of the coursework will also come with a test suite. You can run the test suite by invoking:
+\begin{minted}{text}
 $ stack test
 \end{minted}
 As the test suite is being executed, it will print the outcome of each test to the standard output. If there are any benchmarks, you run them by invoking:
@@ -97,11 +97,11 @@ Another useful command is the following, which invokes GHCi with the configurati
 \begin{minted}{bash}
 $ stack repl
 \end{minted}
-This launches the GHCi REPL for your project so that you can experiment with your code and ask for types etc. See the notes for the first lab for details on the REPL.
+This launches the GHCi REPL for your project so that you can experiment with your code and ask for types etc. See the notes for the first exercises for details on the REPL.
 
 \subsection{Cabal}
 
-Cabal is Haskell's default package manager. We will not be using it in this module since Stack does everything Cabal does, but better. However, you should be aware of files with the \texttt{\small .cabal} extension. Stack uses a tool called \texttt{\small hpack} to generate these \texttt{\small .cabal} files from \texttt{\small package.yaml} which contain the project configuration, such as which dependencies to load. If you decide to use \emph{e.g.} additional libraries (\Cref{sec:hackage}), then you will need to list them in the relevant \texttt{\small package.yaml} file. We cover this process in detail in one of the lectures.
+Cabal is Haskell's default package manager. We will not be using it in this module since Stack does everything Cabal does, but better. However, you should be aware of files with the \texttt{\small .cabal} extension which contain the project configuration, such as which dependencies to load. Stack can also a tool called \texttt{\small hpack} to generate these \texttt{\small .cabal} files from \texttt{\small package.yaml} files. Some labs will just come with a \texttt{\small .cabal} file which can you edit directly while others may have a \texttt{\small package.yaml} file that you need to edit instead. If you decide to use \emph{e.g.} additional libraries (\Cref{sec:hackage}), then you will need to list them in the relevant \texttt{\small .cabal} or \texttt{\small package.yaml} file. We cover this process in detail in one of the lectures.
 
 \subsection{Prelude} 
 
@@ -124,7 +124,7 @@ If you are working on your own machine and want to install additional packages, 
 \section{Version control}
 \label{sec:git}
 
-The skeleton code for all practicals and for all coursework is available as Git repositories which are hosted on GitHub at \url{https://github.com/fpclass/}. GitHub is one of several web services that allows you to host Git repositories online, along with \emph{e.g.} GitLab and BitBucket which are also popular. You are encouraged to use version control to obtain and maintain your code. If you have not had much exposure to version control using Git before, \emph{Pro Git} by Scott Chacon and Ben Straub is a very good reference book which is available for free at {\small \url{https://git-scm.com/book/en/v2}}. Below is a very quick reference of some of the most important commands you will use.
+The skeleton code for all practicals and for all coursework is available as Git repositories which are hosted on GitHub at {\small \url{https://github.com/fpclass/}}. GitHub is one of several web services that allows you to host Git repositories online, along with \emph{e.g.} GitLab and BitBucket which are also popular. You are encouraged to use version control to obtain and maintain your code. If you have not had much exposure to version control using Git before, \emph{Pro Git} by Scott Chacon and Ben Straub is a very good reference book which is available for free at {\small \url{https://git-scm.com/book/en/v2}}. Below is a very quick reference of some of the most important commands you will use.
 
 To obtain the code for e.g. the first practical which is located in the \texttt{\small lab-getting-started} repository, you will want to run the following command on your machine once you have installed \texttt{\small git} (note that \texttt{\small git} is already installed by default on the lab machines, macOS, and many linux distributions):
 \begin{minted}{bash}
@@ -132,7 +132,7 @@ $ git clone https://github.com/fpclass/lab-getting-started
 \end{minted}
 This will create a local copy of the \texttt{\small lab-getting-started} repository on your machine that you can modify. If you are planning to work on your practical or coursework from multiple locations (e.g. a machine in the lab and your personal machine), you may find it beneficial to create a GitHub account and \emph{fork} the relevant repositories to your account instead. This creates a copy of them on your GitHub account which can then be read from and written to form anywhere. You can fork repositories on the GitHub website by visiting e.g. {\small \url{https://github.com/fpclass/lab-getting-started}} once logged in and clicking the ``fork'' button. If you take this approach, you will still need to obtain a local copy of the repository on all machines you plan to work on by running the command shown above, but replacing \texttt{\small fpclass} with your GitHub username. 
 
-\textbf{WARNING}: do not fork the coursework repositories to your account as they will end up being public and you do not want everyone to be able to see your solutions! Use the links provided on the module website instead which will allow you to create private forks of the repositories.
+\fbox{\parbox{\textwidth}{\textbf{WARNING}: do not fork the coursework repositories to your account as they will end up being public and you do not want everyone to be able to see your solutions! Use the links provided on the module website instead which will allow you to create private forks of the repositories.}}
 
 Once you have made some changes to the skeleton code, you will want to \emph{commit} your changes. This will tell \texttt{\small git} to remember that version in case you ever wish to go back to it. You can commit your changes by running:
 \begin{minted}{bash}
@@ -156,7 +156,7 @@ Most IDEs and text editors have plugins which can help you write Haskell code, b
 \subsection{Haskell IDE Engine}
 
 Haskell IDE Engine (or \texttt{\small hie} for short) is the Haskell community's current effort at creating a unified tool that text editors and IDE's can use to provide Haskell-related functionality. The \texttt{\small hie} program implements Microsoft's Language Server Protocol (LSP) which allows \texttt{\small hie} to be used with any editor that implements LSP. On the lab machines, \texttt{\small hie} is already installed for you. If you are working on your own machine, you will need to install it by following the instructions at:
-\begin{center}
+\begin{center}\small
 	\url{https://github.com/haskell/haskell-ide-engine}
 \end{center}
 
@@ -164,46 +164,46 @@ Haskell IDE Engine (or \texttt{\small hie} for short) is the Haskell community's
 
 This section contains recommendations for Haskell-related plugins for different text editors.
 
-\paragraph{Atom} Atom is currently my editor of choice for writing Haskell programs. The \bashIn{/modules/cs141/haskell-setup.sh} script on the departmental machines already installs the following plugins for you:
+\paragraph{Atom} Atom is currently one of the text editors I would recommend for writing Haskell programs. The \bashIn{/modules/cs141/haskell-setup.sh} script on the departmental machines already installs the following plugins for you:
 \begin{itemize}
 	\item \texttt{\small language-haskell}, which provides syntax highlighting for \texttt{\small .hs} source files.
 	\item \texttt{\small atom-ide-ui}, which provides IDE-like UI elements in Atom.
 	\item \texttt{\small ide-haskell-hie}, which allows Atom to provide IDE-like functionality for Haskell by utilising the Haskell IDE Engine. 
 \end{itemize}
-If you are using Atom on your own machine, I would strongly encourage you to install the above packages through Atom's package manager.
+If you are using Atom on your own machine, I would strongly encourage you to install the above packages through Atom's package manager \texttt{\small apm}.
 
-\paragraph{Visual Studio Code} To use Haskell IDE Engine with Visual Studio Code, you can follow the instructions at:
-\begin{center}
+\paragraph{Visual Studio Code} Visual Studio Code is very similar to Atom and is what I have been using lately. It is not installed on the departmental machines by default, but you can install it yourself. To use Haskell IDE Engine with Visual Studio Code, you can follow the instructions at:
+\begin{center}\small 
 	\url{https://github.com/haskell/haskell-ide-engine#using-hie-with-vs-code}
 \end{center}
 
-\paragraph{Sublime text} To use Haskell IDE Engine with Sublime, you can follow the instructions at:
-\begin{center}
+\paragraph{Sublime text} Sublime is a commercial text editor and that you need to pay for, but it offers better performance than Atom or VS Code. If you own a copy of Sublime and want to use Haskell IDE Engine with it, you can follow the instructions at:
+\begin{center}\small 
 	\url{https://github.com/haskell/haskell-ide-engine#using-hie-with-sublime-text}
 \end{center}
 
 \paragraph{Vim} To use Haskell IDE Engine with Vim, you can follow the instructions at:
-\begin{center}
+\begin{center}\small
 	\url{https://github.com/haskell/haskell-ide-engine#using-hie-with-vim-or-neovim}
 \end{center}
 There are also Vimscripts for Haskell at:
-\begin{center}
+\begin{center}\small
 \url{https://github.com/neovimhaskell/haskell-vim}
 \end{center}
 
 \paragraph{Emacs} To use Haskell IDE Engine with Emacs, you can follow the instructions at:
-\begin{center}
+\begin{center}\small
 	\parbox{13cm}{\centering\url{https://github.com/haskell/haskell-ide-engine\#using-hie-with-emacs}}
 \end{center}
 There is a Haskell mode for Emacs as well:
-\begin{center}
+\begin{center} \small
 \url{https://github.com/haskell/haskell-mode}
 \end{center}
 
 \subsection{ghcid}
 
 Sometimes we do not need a full-blown IDE and installing \texttt{\small hie} can be quite cumbersome. A more lightweight alternative is \texttt{\small ghcid}, which is essentially just \texttt{\small ghci} or \texttt{\small stack repl}, but automatically reloads your files when they change. You can read more about \texttt{\small ghci} at:
-\begin{center}
+\begin{center} \small
 	\url{https://github.com/ndmitchell/ghcid}
 \end{center}
 The \texttt{\small ghcid} executable is already installed on the lab machines and you can invoke it by running the following in \emph{e.g.} a folder with a \texttt{\small stack.yaml} file in it:
