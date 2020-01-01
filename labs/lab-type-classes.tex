@@ -1,0 +1,51 @@
+\section{Type classes}
+\topics{Type classes.}
+
+These exercises are about type classes in Haskell. You can obtain the skeleton code by cloning the repository from GitHub:
+\begin{minted}{bash}
+$ git clone https://github.com/fpclass/lab-type-classes
+\end{minted}
+
+\taskLine 
+
+\subsubsection{Monoids}
+
+A \emph{monoid} is an algebraic structure which consists of a unit value and an associative, binary operation. In Haskell, we can declare a type class for types which are monoids:
+\begin{minted}{haskell}
+class Monoid a where
+mempty  :: a
+mappend :: a -> a -> a
+mconcat :: [a] -> a
+\end{minted}
+Here, \texttt{mempty} represents the unit value and \texttt{mappend} represents the associative, binary operation. Instances of the \texttt{Monoid} type class should obey the following \emph{monoid laws}:
+\begin{displaymath}
+\begin{array}{lcrcl}
+\textbf{Left identity} &\qquad & \mathit{mappend}~\mathit{mempty}~x & = & x \\
+\textbf{Right identity} &\qquad & \mathit{mappend}~x~\mathit{mempty} & = & x \\
+\textbf{Associativity} & \qquad & \mathit{mappend}~x~(\mathit{mappend}~y~z) & = & \mathit{mappend}~(\mathit{mappend}~x~y)~z \\
+\textbf{Concatenation} & \qquad & \mathit{mconcat} & = & \mathit{foldr}~\mathit{mappend}~\mathit{mempty}
+\end{array}
+\end{displaymath}
+We say that a type \emph{forms} a monoid if there is an instance of the \haskellIn{Monoid} type class for it which obeys the monoid laws. 
+
+The \haskellIn{mconcat} function shown above is not necessary for a type to be a monoid, but it generalises the ordinary \haskellIn{concat} function on lists of lists and can easily be implemented with the help of \haskellIn{mappend} and \haskellIn{mempty}.
+
+\taskLine 
+
+\task{The \haskellIn{mconcat} function does nothing specific to any particular type. Specify a default implementation for the \haskellIn{mconcat} function in the declaration of the \haskellIn{Monoid} type class so that it obeys the fourth monoid law.}
+
+\task{Does it matter whether you use \haskellIn{foldr} or \haskellIn{foldl} for the implementation of \haskellIn{mconcat}?}
+
+\taskLine
+
+\task{Implement \haskellIn{mempty} and \haskellIn{mappend} of the \haskellIn{Monoid} instance for \haskellIn{Int} so that they obey the monoid laws. Note that there are two possible implementations which satisfy the monoid laws -- can you think of both?}
+
+\taskLine 
+
+\task{Implement \haskellIn{mempty} and \haskellIn{mappend} of the \haskellIn{Monoid} instance for \texttt{\small [a]} so that they obey the monoid laws.}
+
+\taskLine 
+
+\task{Functions of type \texttt{\small a -> b} form a monoid if \texttt{\small b} is a monoid. Implement \haskellIn{mempty} and \haskellIn{mappend} of the \haskellIn{Monoid} instance for \texttt{\small a -> b} so that they obey the monoid laws. Note that there are no unit tests for this task as it would require tests for function equality.}
+
+\taskLine 
