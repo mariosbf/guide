@@ -1,4 +1,4 @@
-\section{Using the standard library}
+\section{Using the standard library} \label{sec:lab-prelude}
 \topics{Prelude, modules and packages, using standard library functions.}
 
 Like most programming languages, Haskell has a standard library which contains many useful definitions that virtually every Haskell program makes some use of. Haskell's standard library is called the \emph{Prelude}. You can find the documentation for the Prelude on Hackage:
@@ -68,4 +68,4 @@ library
 \end{minted}
 \task{In \texttt{\small src/Lib.hs}, import the \haskellIn{Util} module with a suitable \haskellIn{import} statement and create a new definition for a function \haskellIn{quadruple :: Int -> Int} which uses \haskellIn{double} twice to quadruple its argument.}
 
-\task{Run \texttt{\small stack repl} in your package directory and use your \haskellIn{quadruple} and \haskellIn{double} functions to verify that they work as you would expect. If everything works as intended, then congratulations! You have created your first package from scratch with two modules and you have successfully imported one of the modules into the other.}
+\task{Run \texttt{\small stack repl} in your package directory and use your \haskellIn{quadruple} and \haskellIn{double} functions to verify that they work as you would expect. If everything works as intended, then congratulations! You have created your first package from scratch with two modules and you have successfully imported a function from one of the modules into the other.}
