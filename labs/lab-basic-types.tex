@@ -1,11 +1,7 @@
 \section{Basic types}
-\topics{Basic types, function types, parametric polymorphism, lists, pairs, ad-hoc polymorphism via type classes, built-in type classes, type class constraints, and list comprehensions.}
+\topics{Basic types, function types, parametric polymorphism, lists, pairs, and type class constraints.}
 
-These exercises are about \emph{types} in Haskell. You can obtain the skeleton code by cloning the respective repository from GitHub:
-\begin{minted}{bash}
-$ git clone https://github.com/fpclass/lab-basic-types
-\end{minted}
-In a nutshell, the type of an expression tells you what sort of value an expression eventually evaluates to. Not all expressions can be typed! If an expression cannot be reduced to a normal form, such as \haskellIn{not 7}, then it does not have a type. We use the following notation to say that an expression \texttt{\small expression} has type \texttt{\small type} -- this is referred to as a \emph{typing}:
+These exercises are about \emph{types} in Haskell. In a nutshell, the type of an expression tells you what sort of value an expression eventually evaluates to. Not all expressions can be typed! If an expression cannot be reduced to a normal form, such as \haskellIn{not 7}, then it does not have a type and the compiler will refuse to compile the program. We use the following notation to say that an expression \texttt{\small expression} has type \texttt{\small type} -- this is referred to as a \emph{typing}:
 \begin{center}
 	\begin{tabular}{lcl}
 		\texttt{\small expression} & \texttt{\small ::} & \texttt{\small type}
@@ -23,7 +19,9 @@ if 5 > 6 then 'a' else 'b' :: Char
 4 + 8 * 15 - 16            :: Num a => a
 (\x -> x) True             :: Bool
 \end{minted}
-As you can see, the size or complexity of a term does not necessarily correspond to that of a type. It only matters what an expression evaluates to. Some expressions have multiple permissible types. For example, the expression \haskellIn{42} could have type \haskellIn{Int} (the type of signed integers where the precision depends on your platform), \haskellIn{Integer} (the type of arbitrary precision integers), \haskellIn{Num a => a} (a polymorphic type representing all numeric types, \emph{i.e.} instances of the \haskellIn{Num} type class), as well as others.
+As you can see, the size or complexity of a term does not necessarily correspond to that of a type. It only matters what an expression evaluates to. Some expressions have multiple permissible types. For example, the expression \haskellIn{42} could have type \haskellIn{Int} (the type of signed integers where the precision depends on your platform), \haskellIn{Integer} (the type of arbitrary precision integers), \haskellIn{Num a => a} (a polymorphic type \haskellIn{a} constrained to all numeric types by the constraint \haskellIn{Num a}), as well as others.
+
+\makebox[0.5cm]{\faBook}~\emph{Recommended reading}: Chapter 3 of \emph{Learn you a Haskell} \citep{lipovaca2011learn} or Chapter 3 of \emph{Programming in Haskell} \citep{hutton2016programming}.
 
 \subsubsection{Types}
 
@@ -38,7 +36,7 @@ If an expression can be typed, the Haskell compiler can \emph{infer} the \emph{m
 
 \taskLine
 
-\task{Launch the REPL and try it for yourself by asking for the types of the following expressions:}
+\task{Launch the REPL with \texttt{\small stack repl} in an arbitrary directory that does \emph{not} already contain any Haskell code and try it for yourself by asking for the types of the following expressions with the \texttt{\small :t} command:}
 \begin{itemize}
 	\item \haskellIn{'a'}
 	\item \haskellIn{[True, True, False]}
@@ -47,6 +45,14 @@ If an expression can be typed, the Haskell compiler can \emph{infer} the \emph{m
 	\item \haskellIn{\x -> x}
 	\item \haskellIn{1+1}
 \end{itemize}
+
+\task{Since the Haskell compiler always infers the most general type for an expression, you may sometimes want to validate whether a less general type is also permissible. You can annotate expressions with typings for that purpose and get the Haskell compiler to validate your annotations. For example, try to ask for the types of the following two expressions:}
+\begin{itemize}
+	\item \haskellIn{108}
+	\item \haskellIn{(108 :: Int)}
+	\item \haskellIn{(True :: Int)}
+\end{itemize}
+As you can see, you get the most general type for \haskellIn{108}. For \haskellIn{(108 :: Int)}, the compiler validates that \haskellIn{Int} is indeed a permissible type for \haskellIn{108}. For the last expression, we get a type error since \haskellIn{Int} is not a permissible type for \haskellIn{True}.
 
 \taskLine
 
@@ -62,8 +68,8 @@ Lists in Haskell are \emph{homogeneous}. That is, they can only contain elements
 
 \taskLine
 
-\task{Recall from the lecture on type classes that the REPL essentially wraps each expression you try to evaluate into a call to the \haskellIn{show} function. Try to evaluate some expressions which \emph{are} well typed, but whose types do not have a \haskellIn{Show} instance. This is usually the case for functions. For example: }
+\task{The REPL essentially wraps each expression you try to evaluate into a call to the \haskellIn{show :: Show a => a -> String} function. Try to evaluate some expressions which \emph{are} well typed, but whose types do not satisfy the \haskellIn{Show} predicate. This is usually the case for functions. For example: }
 \begin{itemize}
 \item \haskellIn{not} \\
-Even though \haskellIn{not} is well typed, you get a type error if you try to evaluate it in the REPL. That is because the REPL does not know how to display a result that is a function. The error you get will tell you that there is no \haskellIn{Show} instance for \haskellIn{Bool -> Bool}, the type of \haskellIn{not}. 
+Even though \haskellIn{not} is well typed, you get a type error if you try to evaluate it in the REPL. That is because the REPL does not know how to display a result that is a function. The error you get will tell you that the \haskellIn{Show} constraint cannot be satisfied for \haskellIn{Bool -> Bool}, the type of \haskellIn{not}. 
 \end{itemize}
