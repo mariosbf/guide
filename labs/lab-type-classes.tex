@@ -1,51 +1,94 @@
 \section{Type classes}
-\topics{Type classes.}
+\topics{Type classes and type class instances.}
 
 These exercises are about type classes in Haskell. You can obtain the skeleton code by cloning the repository from GitHub:
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/lab-type-classes
 \end{minted}
 
+Type classes in Haskell describe interfaces and are used to constrain parametric polymorphism. For a type to satisfy a type class constraint, it must implement the interface that is described by the type class. This is useful because ordinarily, when we have a type variable, we know nothing about the type that may be instantiated for it. Therefore, if we have a value of some type \haskellIn{a}, then we cannot really do much with it because we know nothing about it. However, if \haskellIn{a} is constrained by some type class constraint, then we know that whatever type gets instantiated for \haskellIn{a} will at least support all the functions and operations described the type class. In order to show that a particular type can satisfy a type class constraint, we must implement a type class instance for it which implements the type class's functions for that type.
+
+\makebox[0.5cm]{\faBook}~\emph{Recommended reading}: Chapter 3 of \emph{Learn you a Haskell} \citep{lipovaca2011learn} or Chapters 3 and 8.5 of \emph{Programming in Haskell} \citep{hutton2016programming}.
+
+\makebox[0.5cm]{\faLightbulbO}~Do not forget to test your solutions with \texttt{\small stack test} as you progress through the exercises.
+
+\taskLine 
+
+Functional programming is firmly grounded in mathematics and therefore we often use mathematical abstractions as programming abstractions in Haskell. Two examples of this we will consider for these exercises are algebraic structures known as \emph{semigroups} and \emph{monoids}. Type classes for both of these structures exist in Haskell's standard library, but for these exercises we will implement them both ourselves.
+
+\subsubsection{Semigroups}
+
+A semigroup is any type which has an associative binary operation. We can define a type class for this where the binary operator is called \haskellIn{<>}:
+\begin{minted}{haskell}
+class Semigroup a where 
+  (<>) :: a -> a -> a 
+\end{minted}
+The associativity law for \haskellIn{<>} can be described as follows, although note that there is no way to tell Haskell about this law or get the compiler to check that our instances of the \haskellIn{Semigroup} class satisfy it. Later on in the module we will see how to prove by hand that such laws hold:
+\begin{displaymath}
+\begin{array}{lcrcl}
+\textbf{Associativity} & \qquad & x \mappend (y \mappend z) & = & (x \mappend y) \mappend z 
+\end{array}
+\end{displaymath}
+We say that a type \emph{forms} a semigroup if there is an instance of the \haskellIn{Semigroup} type class for it which obeys the associativity law.
+
+\taskLine
+
+\task{Implement \haskellIn{(<>)} of the \haskellIn{Semigroup} instance for \haskellIn{Int} so that it obeys the associativity law. Note that there are at least two possible implementations which satisfy the associativity laws -- can you think of at least two?}
+
+\task{Implement \haskellIn{(<>)} of the \haskellIn{Semigroup} instance for \texttt{\small [a]} so that it obeys the associativity law.}
+
+\task{Once implemented, you can test that your \haskellIn{Semigroup} instances satisfy the associativity law by running \texttt{\small stack test}. You can also play with them in the REPL: for example, to test the \texttt{\small [a]} instance:}
+\begin{minted}{haskell}
+*Lab Lab> [1,2,3] <> [4,5,6]      
+[1,2,3,4,5,6]
+*Lab Lab> [True, False] <> [True] 
+[True, False, True]
+*Lab Lab> "hello" <> "there" 
+"hellothere"
+\end{minted}
+
 \taskLine 
 
 \subsubsection{Monoids}
 
-A \emph{monoid} is an algebraic structure which consists of a unit value and an associative, binary operation. In Haskell, we can declare a type class for types which are monoids:
+A monoid is an algebraic structure which is a semigroup and additionally has a unit value. In Haskell, we can declare a type class for types which are monoids:
 \begin{minted}{haskell}
-class Monoid a where
-mempty  :: a
-mappend :: a -> a -> a
-mconcat :: [a] -> a
+class Semigroup a => Monoid a where
+  mempty  :: a
+  mconcat :: [a] -> a
 \end{minted}
-Here, \texttt{mempty} represents the unit value and \texttt{mappend} represents the associative, binary operation. Instances of the \texttt{Monoid} type class should obey the following \emph{monoid laws}:
+As we can see, we have a super class constraint which says that in order for some type \haskellIn{a} to be a \haskellIn{Monoid}, it must first be an instance of \haskellIn{Semigroup}. Instances of the \texttt{Monoid} type class should obey the following \emph{monoid laws}:
 \begin{displaymath}
 \begin{array}{lcrcl}
 \textbf{Left identity} &\qquad & \mathit{mappend}~\mathit{mempty}~x & = & x \\
 \textbf{Right identity} &\qquad & \mathit{mappend}~x~\mathit{mempty} & = & x \\
-\textbf{Associativity} & \qquad & \mathit{mappend}~x~(\mathit{mappend}~y~z) & = & \mathit{mappend}~(\mathit{mappend}~x~y)~z \\
 \textbf{Concatenation} & \qquad & \mathit{mconcat} & = & \mathit{foldr}~\mathit{mappend}~\mathit{mempty}
 \end{array}
 \end{displaymath}
 We say that a type \emph{forms} a monoid if there is an instance of the \haskellIn{Monoid} type class for it which obeys the monoid laws. 
 
-The \haskellIn{mconcat} function shown above is not necessary for a type to be a monoid, but it generalises the ordinary \haskellIn{concat} function on lists of lists and can easily be implemented with the help of \haskellIn{mappend} and \haskellIn{mempty}.
+The \haskellIn{mconcat} function shown above is not necessary for a type to be a monoid, but it generalises the ordinary \haskellIn{concat} function on lists of lists and can easily be implemented with the help of \haskellIn{(<>)} and \haskellIn{mempty}.
 
 \taskLine 
 
-\task{The \haskellIn{mconcat} function does nothing specific to any particular type. Specify a default implementation for the \haskellIn{mconcat} function in the declaration of the \haskellIn{Monoid} type class so that it obeys the fourth monoid law.}
+\task{The \haskellIn{mconcat} function does nothing specific to any particular type. Specify a default implementation for the \haskellIn{mconcat} function in the declaration of the \haskellIn{Monoid} type class so that it obeys the last monoid law.}
 
 \task{Does it matter whether you use \haskellIn{foldr} or \haskellIn{foldl} for the implementation of \haskellIn{mconcat}?}
 
 \taskLine
 
-\task{Implement \haskellIn{mempty} and \haskellIn{mappend} of the \haskellIn{Monoid} instance for \haskellIn{Int} so that they obey the monoid laws. Note that there are two possible implementations which satisfy the monoid laws -- can you think of both?}
+\task{Implement \haskellIn{mempty} of the \haskellIn{Monoid} instance for \haskellIn{Int} so that it obeys the monoid laws. Remember that there are at least two possible implementations for \haskellIn{Semigroup} for \haskellIn{Int} -- how do they affect our choice for the implementation of \haskellIn{mempty}?} 
+
+\task{Implement \haskellIn{mempty} of the \haskellIn{Monoid} instance for \texttt{\small [a]} so that it obeys the monoid laws.}
 
 \taskLine 
 
-\task{Implement \haskellIn{mempty} and \haskellIn{mappend} of the \haskellIn{Monoid} instance for \texttt{\small [a]} so that they obey the monoid laws.}
+\task{Functions of type \texttt{\small a -> b} form a monoid if \texttt{\small b} is a monoid. Implement the \haskellIn{Semigroup} and \haskellIn{Monoid} instances for \texttt{\small a -> b} so that they obey the semigroup and monoid laws. Note that there are no unit tests for this task as it would require tests for function equality.}
 
-\taskLine 
-
-\task{Functions of type \texttt{\small a -> b} form a monoid if \texttt{\small b} is a monoid. Implement \haskellIn{mempty} and \haskellIn{mappend} of the \haskellIn{Monoid} instance for \texttt{\small a -> b} so that they obey the monoid laws. Note that there are no unit tests for this task as it would require tests for function equality.}
+If this seems a bit unintuitive, you can think of this as a way of composing two functions of type \texttt{\small a -> b} to yield a new function of type \texttt{\small a -> b} which takes an input of type \texttt{\small a}, gives it to both original functions which results in two values of type \texttt{\small b} that are then combined into one value of type \texttt{\small b} through the implementation of \haskellIn{(<>)} for \texttt{\small b}. For example:
+\begin{minted}{haskell}
+*Lab Lab> ((\x -> x ++ [1,2]) <> (\y -> y ++ [3,4])) [5]
+[5,1,2,5,3,4]
+\end{minted}
 
 \taskLine 
