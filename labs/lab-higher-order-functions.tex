@@ -1,11 +1,13 @@
 \section{Higher-order functions}
-\topics{Higher-order functions.}
+\topics{Higher-order functions and recursion schemes.}
 
 These exercises is about higher-order functions in Haskell. You can obtain the skeleton code by cloning the repository from GitHub:
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/lab-higher-order-functions
 \end{minted}
 In a nutshell, higher-order functions are functions which take other functions as arguments or return functions.
+
+\makebox[0.5cm]{\faBook}~\emph{Recommended reading}: Chapter 6 of \emph{Learn you a Haskell} \citep{lipovaca2011learn} or Chapter 7 of \emph{Programming in Haskell} \citep{hutton2016programming}.
 
 \taskLine
 
@@ -20,15 +22,15 @@ In a nutshell, higher-order functions are functions which take other functions a
 
 \taskLine
 
-\subsubsection{Recursive and higher-order functions}
-
-In the fifth lecture, you learnt how to write functions using \emph{explicit recursion}, as demonstrated in the definition of \haskellIn{and} below:
+You have already learnt how to write functions using \emph{explicit recursion}, as demonstrated in the definition of \haskellIn{and} below:
 \begin{minted}{haskell}
 and :: [Bool] -> Bool
 and []     = True 
 and (x:xs) = x && and xs
 \end{minted}
-You also learnt how to use higher-order functions to abstract over common patterns in the sixth lecture. For example, you could define \haskellIn{and} with the help of \haskellIn{foldr} as the following, in which case the recursion is not explicit:
+\emph{I.e.} a function is explicitly recursive if it mentions itself by name in its definition: in this case, \haskellIn{and} is mentioned on the RHS of the second equation.
+
+You have now also learnt how to use higher-order functions to abstract over common patterns. For example, you could define \haskellIn{and} with the help of \haskellIn{foldr} as the following, in which case the recursion is not explicit:
 \begin{minted}{haskell}
 and :: [Bool] -> Bool 
 and = foldr (&&) True
@@ -36,11 +38,13 @@ and = foldr (&&) True
 
 \taskLine
 
-\task[task:elem-composition]{Now try to define \haskellIn{elem} entirely in terms of the following standard library functions: \haskellIn{not}, \haskellIn{null}, \haskellIn{filter} with an appropriate predicate, and function composition.} 
+\task[task:elem-composition]{Define \haskellIn{elem} entirely in terms of the following standard library functions: \haskellIn{not}, \haskellIn{null}, \haskellIn{filter} with an appropriate predicate, and function composition.} 
+
+\task[task:elem-foldr]{Now define \haskellIn{elem} in terms of \haskellIn{foldr}. Do you find this definition clearer than the previous one?} 
 
 \taskLine
 
-\task{The \haskellIn{foldr1 :: (a -> a -> a) -> [a] -> a} function behaves like \haskellIn{foldr}, except that it assumes lists always have at least one element. It therefore only requires a binary operation and a list as arguments. Implement \haskellIn{maximum} using \haskellIn{foldr1}.}
+\task{The \haskellIn{foldr1 :: (a -> a -> a) -> [a] -> a} function behaves like \haskellIn{foldr}, except that it assumes the list argument always has at least one element. It therefore only requires a binary operation and the list as arguments. Implement \haskellIn{maximum} using \haskellIn{foldr1}.}
 
 \taskLine 
 
