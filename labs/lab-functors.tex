@@ -6,6 +6,8 @@ These exercises are about functors. We introduce you to a range of different typ
 $ git clone https://github.com/fpclass/lab-functors
 \end{minted}
 
+\makebox[0.5cm]{\faBook}~\emph{Recommended reading}: Chapter 11 of \emph{Learn you a Haskell} \citep{lipovaca2011learn} or Chapter 12.1 of \emph{Programming in Haskell} \citep{hutton2016programming}.
+
 \taskLine
 
 \task{We start off with one of the simplest types that is a functor: the \texttt{\small Identity} type. This type is defined as follows:}
@@ -91,7 +93,9 @@ fmap sum (Node [Node [Leaf [1,2,3]], Node [Leaf [9,8,7]]])
 \begin{minted}{haskell}
 data Compose f g a = Compose (f (g a))
 \end{minted}
-This type is a functor. Complete the respective instance of \haskellIn{Functor}. Once implemented, you can very easily apply \haskellIn{fmap} to arbitrarily nested data structures: 
+What is the type of the \haskellIn{Compose} constructor?
+
+\task{The \haskellIn{Compose} type is a functor. Complete the respective instance of \haskellIn{Functor}. Once implemented, you can very easily apply \haskellIn{fmap} to arbitrarily nested data structures:} 
 \begin{minted}{haskell}
 fmap (+5) (Compose [[1,2,3], [4,5,6]]) 
 ==> Compose [[6,7,8], [9,10,11]]
