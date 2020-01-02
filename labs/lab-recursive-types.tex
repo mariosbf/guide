@@ -1,11 +1,18 @@
 \section{Recursive data types}
-\topics{Algebraic data types}
+\topics{Algebraic data types, binary trees, and red-black trees.}
 
 These exercises are about recursive data types in Haskell. You can obtain the skeleton code by cloning the respective repository from GitHub:
 \begin{minted}{bash}
 $ git clone https://github.com/fpclass/lab-recursive-types
 \end{minted}
-Note that the skeleton code for these exercises will not initially compile and you need to complete some of the exercises first before it does. 
+
+\makebox[0.5cm]{\faLightbulbO}~Note that the skeleton code for these exercises will not initially compile and you need to complete some of the exercises first before it does. 
+
+\makebox[0.5cm]{\faLightbulbO}~Some of the unit tests simultaneously test several of your functions, such as \emph{e.g.} to ensure that your trees have the correct depth after several insertions -- a test failure could be due to an error in any one of the tested functions.
+
+\makebox[0.5cm]{\faLightbulbO}~You may wish to read your \emph{CS126 Design of Information Structures} notes or equivalent in conjunction with these exercises.
+
+\makebox[0.5cm]{\faBook}~\emph{Further reading}: if you are interested in the implementation of data structures in purely functional programming languages, \emph{Purely functional data structures} \citep{okasaki1999purely} is an excellent book.
 
 \taskLine 
 
@@ -147,9 +154,7 @@ child{ node [arn_r] {z}
 \end{center}
 \end{fancyfig}
 
-\task[task:adt-balance]{Complete the definition of the \haskellIn{balance} function, which given some arbitrary red-black tree, should balance it according to the transformations shown in \Cref{fig:rbtree-balance}. }
-
-\clearpage 
+\task[task:adt-balance]{Complete the definition of the \haskellIn{balance} function, which given some arbitrary red-black tree, should balance it according to the transformations shown in \Cref{fig:rbtree-balance}. } 
 
 You can accomplish this simply by pattern-matching on the tree given as input to determine whether it is unbalanced and returning a balanced version of it if necessary. One of the four transformations is already implemented for you.
 
@@ -159,29 +164,29 @@ You can accomplish this simply by pattern-matching on the tree given as input to
 }
 
 \begin{minted}{haskell}
-Lab4> foldl insert empty []
+Lab> foldl insert empty []
 Leaf
 
-Lab4> foldl insert empty [42]
+Lab> foldl insert empty [42]
 Node Black Leaf 42 Leaf
 
-Lab4> foldl insert empty ["CS141", "CS263"]
+Lab> foldl insert empty ["CS141", "CS263"]
 Node Black Leaf "CS141" (Node Red Leaf "CS263" Leaf)
 
-Lab4> foldl insert empty "KOAN"
+Lab> foldl insert empty "KOAN"
 Node Black 
     (Node Black (Node Red Leaf 'A' Leaf) 'K' Leaf) 
     'N' 
     (Node Black Leaf 'O' Leaf)
 
-Lab4> foldl insert empty "WITTER"
+Lab> foldl insert empty "WITTER"
 Node Black 
     (Node Black (Node Red Leaf 'E' Leaf) 
     'I' 
     (Node Red Leaf 'R' Leaf)) 'T' (Node Black Leaf 'W' Leaf)
 \end{minted}
 
-The exact result depends on the names you chose for your constructors and the order of their parameters. There are two unit tests for this lab which check that the depth of your red-black trees never exceed $2 \times \left \lfloor{\log(n+1)}\right \rfloor$ where $n$ is the number of nodes in the tree and that converting a red-black tree to a list results in a sorted list.
+The exact result depends on the names you chose for your constructors and the order of their parameters. There are two unit tests for this lab which check that the depth of your red-black trees never exceed $2 \times \left \lfloor{\log(n+1)}\right \rfloor$ where $n$ is the number of nodes in the tree and that converting a red-black tree to a list results in a sorted list. 
 
 \task[task:adt-invariants]{There are two invariants which red-black trees should never violate:
 \begin{enumerate}
