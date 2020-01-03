@@ -83,13 +83,13 @@ elem x = foldr (\y r -> x==y || r) False
 
 \begin{enumerate}
 	\item A function of type \texttt{\small a -> b -> c} returns a function. \\
-	\emph{Solution}: This is true. Function types associate to the right, so that this type really means \texttt{\small a -> (b -> c)}: a function from some value of type \texttt{\small a} to a function of type \texttt{\small b -> c}.
+	\emph{Solution}: This is true. Function types associate to the right, so that this type really means \texttt{\small a -> (b -> c)}: a function from some value of type \texttt{\small a} to a function of type \texttt{\small b -> c}. Note that there are no functions whose type is exactly \texttt{\small a -> b -> c} however.
 	\item A function of type \texttt{\small (a -> b) -> Int} returns a function. \\
 	\emph{Solution}: This is false. The type shows that the function always returns a value of type \haskellIn{Int}.
 	\item A function of type \texttt{\small (Int, Bool) -> Char} is higher-order. \\
 	\emph{Solution}: This is false. A function is higher-order if it takes a function as argument or if it returns a function. Functions of the type shown above do neither.
 	\item A function of type \texttt{\small a -> a} can be a higher-order function.\\
-	\emph{Solution}: This is true. The type variable \texttt{\small a} can be instantiated with any other type, including function types. For example, consider the following implementation:
+	\emph{Solution}: This is true. The type variable \texttt{\small a} can be instantiated with any other type, including function types. The identity function \haskellIn{id} is the only function of this type:
 	\begin{minted}{haskell}
 	id :: a -> a
 	id x = x

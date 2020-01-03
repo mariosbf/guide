@@ -71,7 +71,7 @@ which generalises the \haskellIn{take} function to a predicate: \haskellIn{takeW
 
 \taskLine 
 
-\task{Complete the definition of \haskellIn{zipWith}, which generalises \haskellIn{zip}. While \haskellIn{zip} puts elements from two lists into pairs in a resulting list, \haskellIn{zipWith} requires a function of type \haskellIn{a -> b -> c} as argument which combines elements of type \texttt{\small a} from the first list and elements of type \texttt{\small b} from the second list into elements of type \texttt{\small c} for the resulting list. For example, \haskellIn{zipWith replicate [1,2,3] ['a', 'b', 'c']} should evaluate to \haskellIn{[['a'], ['b', 'b'], ['c', 'c', 'c']]}.}
+\task{Complete the definition of \haskellIn{zipWith}, which generalises \haskellIn{zip}. While \haskellIn{zip} puts elements from two lists into pairs in a resulting list, \haskellIn{zipWith} requires a function of type \mintinline{text}{a -> b -> c} as argument which combines elements of type \texttt{\small a} from the first list and elements of type \texttt{\small b} from the second list into elements of type \texttt{\small c} for the resulting list. For example, \haskellIn{zipWith replicate [1,2,3] ['a', 'b', 'c']} should evaluate to \haskellIn{["a", "bb", "ccc"]}.}
 
 \taskLine 
 

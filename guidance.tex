@@ -22,7 +22,7 @@ If you also want to work on your own machine, there are several ways in which yo
 
 \subsection{Option 1: Installation using Stack (recommended)}
 
-Download the Haskell Stack from {\small \url{https://docs.haskellstack.org/en/stable/README/}}. There is a simple command you can run on Unix-based machines and there are installers for Windows. Once you have installed Stack, you can install the Haskell compiler, GHC. For best compatibility with the module and to save you time, you are encouraged to specify the resolver version that we use for the module this year:
+Download the Haskell Stack from {\small \url{https://docs.haskellstack.org/en/stable/README/}}. There is a simple command you can run on Unix-based machines and there are installers for Windows. You can also get it from your system's package manager. Once you have installed Stack, you can install the Haskell compiler, GHC. For best compatibility with the module and to save you time, you are encouraged to specify the resolver version that we use for the module this year:
 \begin{minted}{bash}
 $ stack setup --resolver=lts-14.12
 \end{minted}
@@ -101,7 +101,7 @@ This launches the GHCi REPL for your project so that you can experiment with you
 
 \subsection{Cabal}
 
-Cabal is Haskell's default package manager. We will not be using it in this module since Stack does everything Cabal does, but better. However, you should be aware of files with the \texttt{\small .cabal} extension which contain the project configuration, such as which dependencies to load. Stack can also a tool called \texttt{\small hpack} to generate these \texttt{\small .cabal} files from \texttt{\small package.yaml} files. Some labs will just come with a \texttt{\small .cabal} file which can you edit directly while others may have a \texttt{\small package.yaml} file that you need to edit instead. If you decide to use \emph{e.g.} additional libraries (\Cref{sec:hackage}), then you will need to list them in the relevant \texttt{\small .cabal} or \texttt{\small package.yaml} file. We cover this process in detail in one of the lectures.
+Cabal is Haskell's default package manager. We will not be using it in this module since Stack does everything Cabal does, but better. However, you should be aware of files with the \texttt{\small .cabal} extension which contain the project configuration, such as which dependencies to load. Stack can also use a tool called \texttt{\small hpack} to generate these \texttt{\small .cabal} files from \texttt{\small package.yaml} files. Some labs will just come with a \texttt{\small .cabal} file which can you edit directly while others may have a \texttt{\small package.yaml} file that you need to edit instead. If you decide to use \emph{e.g.} additional libraries (\Cref{sec:hackage}), then you will need to list them in the relevant \texttt{\small .cabal} or \texttt{\small package.yaml} file. We cover this process in detail in one of the lectures.
 
 \subsection{Prelude} 
 
@@ -151,58 +151,11 @@ None of this is necessary if you have cloned the code from {\small \url{https://
 \section{Development tools}
 \label{sec:dev-tools}
 
-Most IDEs and text editors have plugins which can help you write Haskell code, by adding syntax highlighting or other useful features. More sophisticated plugins require additional tools which provide programming language specific functionality to the editor. 
-
-\subsection{Haskell IDE Engine}
-
-Haskell IDE Engine (or \texttt{\small hie} for short) is the Haskell community's current effort at creating a unified tool that text editors and IDE's can use to provide Haskell-related functionality. The \texttt{\small hie} program implements Microsoft's Language Server Protocol (LSP) which allows \texttt{\small hie} to be used with any editor that implements LSP. On the lab machines, \texttt{\small hie} is already installed for you. If you are working on your own machine, you will need to install it by following the instructions at:
-\begin{center}\small
-	\url{https://github.com/haskell/haskell-ide-engine}
-\end{center}
-
-\subsection{Editors}
-
-This section contains recommendations for Haskell-related plugins for different text editors.
-
-\paragraph{Atom} Atom is currently one of the text editors I would recommend for writing Haskell programs. The \bashIn{/modules/cs141/haskell-setup.sh} script on the departmental machines already installs the following plugins for you:
-\begin{itemize}
-	\item \texttt{\small language-haskell}, which provides syntax highlighting for \texttt{\small .hs} source files.
-	\item \texttt{\small atom-ide-ui}, which provides IDE-like UI elements in Atom.
-	\item \texttt{\small ide-haskell-hie}, which allows Atom to provide IDE-like functionality for Haskell by utilising the Haskell IDE Engine. 
-\end{itemize}
-If you are using Atom on your own machine, I would strongly encourage you to install the above packages through Atom's package manager \texttt{\small apm}.
-
-\paragraph{Visual Studio Code} Visual Studio Code is very similar to Atom and is what I have been using lately. It is not installed on the departmental machines by default, but you can install it yourself. To use Haskell IDE Engine with Visual Studio Code, you can follow the instructions at:
-\begin{center}\small
-	\parbox{13cm}{\centering\url{https://github.com/haskell/haskell-ide-engine\#using-hie-with-vs-code}}
-\end{center}
-
-\paragraph{Sublime text} Sublime is a commercial text editor and that you need to pay for, but it offers better performance than Atom or VS Code. If you own a copy of Sublime and want to use Haskell IDE Engine with it, you can follow the instructions at:
-\begin{center}\small 
-	\url{https://github.com/haskell/haskell-ide-engine#using-hie-with-sublime-text}
-\end{center}
-
-\paragraph{Vim} To use Haskell IDE Engine with Vim, you can follow the instructions at:
-\begin{center}\small
-	\url{https://github.com/haskell/haskell-ide-engine#using-hie-with-vim-or-neovim}
-\end{center}
-There are also Vimscripts for Haskell at:
-\begin{center}\small
-\url{https://github.com/neovimhaskell/haskell-vim}
-\end{center}
-
-\paragraph{Emacs} To use Haskell IDE Engine with Emacs, you can follow the instructions at:
-\begin{center}\small
-	\parbox{13cm}{\centering\url{https://github.com/haskell/haskell-ide-engine\#using-hie-with-emacs}}
-\end{center}
-There is a Haskell mode for Emacs as well:
-\begin{center} \small
-\url{https://github.com/haskell/haskell-mode}
-\end{center}
+Most IDEs and text editors have plugins which can help you write Haskell code, by adding syntax highlighting or other useful features. More sophisticated plugins require additional tools which provide programming language-specific functionality to the editor. 
 
 \subsection{ghcid}
 
-Sometimes we do not need a full-blown IDE and installing \texttt{\small hie} can be quite cumbersome. A more lightweight alternative is \texttt{\small ghcid}, which is essentially just \texttt{\small ghci} or \texttt{\small stack repl}, but automatically reloads your files when they change. You can read more about \texttt{\small ghci} at:
+A lightweight development tool for Haskell is \texttt{\small ghcid}, which is essentially just \texttt{\small ghci} or \texttt{\small stack repl}, but automatically reloads your files when they change. You can read more about \texttt{\small ghcid} at:
 \begin{center} \small
 	\url{https://github.com/ndmitchell/ghcid}
 \end{center}
@@ -211,6 +164,65 @@ The \texttt{\small ghcid} executable is already installed on the lab machines an
 $ /modules/cs141/bin/ghcid
 \end{minted}
 The program will continue to run in the background and, every time you change any files in your project, compile them automatically. If any errors arise, the tool will output them.
+
+\subsection{ghcide}
+
+This program is a work-in-progress tool to provide text editors and IDEs with basic Haskell-related functionality via Microsoft's Language Server Protocol (LSP). It is already installed on the departmental machines in:
+\begin{minted}{bash}
+$ /modules/cs141/bin/ghcide
+\end{minted}
+See \Cref{sec:editors} for information about text editors that have plugins for it. You can read more about the tool in general at:
+\begin{center}\small
+	\url{https://github.com/digital-asset/ghcide}
+\end{center}
+
+\subsection{Haskell IDE Engine}
+
+Haskell IDE Engine (or \texttt{\small hie} for short) is the Haskell community's current effort at creating a unified tool that text editors and IDEs can use to provide Haskell-related functionality. The \texttt{\small hie} program implements Microsoft's Language Server Protocol (LSP) which allows \texttt{\small hie} to be used with any editor that implements LSP. The tool does not currently work on the lab machines, but if you are working on your own machine, you can install it by following the instructions at:
+\begin{center}\small
+	\url{https://github.com/haskell/haskell-ide-engine}
+\end{center}
+
+\subsection{Editors}
+\label{sec:editors}
+
+This section contains recommendations for Haskell-related plugins for different text editors.
+
+\paragraph{Atom} Atom is currently one of the text editors I would recommend for writing Haskell programs. The \bashIn{/modules/cs141/haskell-setup.sh} script on the departmental machines already installs the following plugins for you:
+\begin{itemize}
+	\item \texttt{\small language-haskell}, which provides syntax highlighting for \texttt{\small .hs} source files.
+	\item \texttt{\small atom-ide-ui}, which provides IDE-like UI elements in Atom.
+	\item \texttt{\small ide-haskell-ghcide}, which allows Atom to provide IDE-like functionality for Haskell by utilising \texttt{\small ghcide}. 
+\end{itemize}
+If you are using Atom on your own machine, I would strongly encourage you to install the above packages through Atom's package manager \texttt{\small apm}.
+
+\paragraph{Visual Studio Code} Visual Studio Code is very similar to Atom and is what I have been using lately. It is not installed on the departmental machines by default, but you can install it yourself. To use \texttt{\small ghcide} with Visual Studio Code, you can follow the instructions at:
+\begin{center}\small
+	\parbox{14cm}{\centering\url{https://github.com/digital-asset/ghcide\#using-with-vs-code}}
+\end{center}
+
+\paragraph{Sublime text} Sublime is a commercial text editor and that you need to pay for, but it offers better performance than Atom or VS Code. If you own a copy of Sublime and want to use \texttt{\small ghcide} with it, you can follow the instructions at:
+\begin{center}\small 
+	\url{https://github.com/digital-asset/ghcide#using-with-sublime-text}
+\end{center}
+
+\paragraph{Vim} To use \texttt{\small ghcide} with Vim, you can follow the instructions at:
+\begin{center}\small
+	\url{https://github.com/digital-asset/ghcide#using-with-vimneovim}
+\end{center}
+There are also Vimscripts for Haskell at:
+\begin{center}\small
+\url{https://github.com/neovimhaskell/haskell-vim}
+\end{center}
+
+\paragraph{Emacs} To use \texttt{\small ghcide} with Emacs, you can follow the instructions at:
+\begin{center}\small
+	\parbox{13cm}{\centering\url{https://github.com/digital-asset/ghcide\#using-with-emacs}}
+\end{center}
+There is a Haskell mode for Emacs as well:
+\begin{center} \small
+\url{https://github.com/haskell/haskell-mode}
+\end{center}
 
 \section{Other useful resources}
 
