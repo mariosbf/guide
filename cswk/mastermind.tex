@@ -35,11 +35,11 @@ If you wish to fork the repository on GitHub and then clone your fork, feel free
 \subsubsection{Working with the skeleton code}
 
 You may wish to verify that the code compiles and that all tests fail by entering the \texttt{\small mastermind} directory that was created and running \bashIn{stack test}:
-\begin{minted}{bash}
+\begin{minted}{text}
 $ cd mastermind
 $ stack test
 \end{minted}
-Running \bashIn{stack test} will compile your code, run a bunch of unit tests on it, and give you a rough indication of how complete your solution is (the more tests pass, the more complete it is). Running \bashIn{stack bench} will run a set of benchmarks on your code. You can also use \bashIn{stack build} to just compile your code and then \bashIn{stack exec mastermind} to run the program. Alternatively, you can run \bashIn{stack repl} to load up the REPL, which is useful for debugging.
+Running \mintinline{text}{stack test} will compile your code, run a bunch of unit tests on it, and give you a rough indication of how complete your solution is (the more tests pass, the more complete it is). Running \mintinline{text}{stack bench} will run a set of benchmarks on your code. You can also use \mintinline{text}{stack build} to just compile your code and then \mintinline{text}{stack exec mastermind} to run the program. Alternatively, you can run \mintinline{text}{stack repl} to load up the REPL, which is useful for debugging.
 
 The skeleton code contains a bunch of files, most of which you do not need to touch. The most important file is \texttt{\small src/Game.hs} which contains the definitions you will need to complete in order to implement the game. There are some definitions to get you started. Firstly, the number of pegs per code is defined as:
 \begin{minted}{haskell}
