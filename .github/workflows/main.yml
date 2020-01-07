@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - github-actions
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Initialisation 
+      run: mkdir bin 
+
+    - name: LaTeX compilation
+      uses: dante-ev/latex-action@v0.2.0
+      with:
+        root_file: cs141.tex
+        args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
+
+    - name: Download sitebuilder-util
+      uses: Legion2/download-release-action@v2.1.0
+      with:
+        repository: mbg/sitebuilder-util
+        tag: 'latest'
+        path: bin
+        file: sitebuilder-util
+
+    - name: Publish to Sitebuilder 
+      env: 
+        SB_USER: ${{ secrets.SB_USER }}
+        SB_PASSWORD: ${{ secrets.SB_PASSWORD }}
+      run: |
+        sudo chmod +x ./bin/sitebuilder-util
+        ./bin/sitebuilder-util upload --page /fac/sci/dcs/teaching/material/cs141 --file cs141.pdf --name cs141.pdf 
