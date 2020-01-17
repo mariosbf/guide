@@ -52,6 +52,8 @@ In this example, there are three elements in the list used by the first generato
 
 \task{Generators after the first in a list comprehension may also refer to variables that are bound by preceding generators. Use this to complete the definition of \linebreak \haskellIn{noMoreThanFive} which should be a list of all pairs \haskellIn{(x,y)} such that \haskellIn{x} is a number from 0 to 5 and \haskellIn{y} is also a number from 0 to 5, unless $x+y > 5$: \texttt{\small [(0,0), (0,1), (0,2), (0,3), (0,4), (0,5), (1,0), (1,1), (1,2), (1,3), (1,4), \linebreak (2,0), ...]}}.
 
+\task{Define \haskellIn{noMoreThanFive'} which should produce the same list as \haskellIn{noMoreThanFive}, but not use any inequality operators. Note that the type of \haskellIn{noMoreThanFive'} no longer has an \haskellIn{Ord} constraint on the type variable \haskellIn{a} so that you will receive a type error if you try to use any inequality operators.}
+
 \taskLine
 
 Finally, a list comprehension may contain predicates to determine which elements produced by generators should be used for elements in the resulting list. For example, the following list comprehension generates all numbers which are factors of some number \haskellIn{n}. The \haskellIn{mod} function from the standard library calculates the remainder of two numbers:
