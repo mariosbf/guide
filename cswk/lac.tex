@@ -83,7 +83,7 @@ $ cd large-arithmetic-collider
 $ stack test
 \end{minted}
 Running \texttt{\small stack test} will compile your code, run a bunch of unit tests on it, and give you a rough indication of how complete your solution is (the more tests pass, the more complete it is). %Running \bashIn{stack bench} will run a set of benchmarks on your code. 
-You can also use \bashIn{stack build} to just compile your code and then \texttt{\small stack exec collider} to run the program. Alternatively, you can run \bashIn{stack repl} to load up the REPL, which is useful for debugging.
+You can also use \bashIn{stack build} to just compile your code and then \texttt{\small stack exec collider} to run the program (or just \texttt{\small stack run} to do both). Note that the program will of course not work properly until you have implemented the functions for this coursework. Specifically, the first two campaigns will not work until you have implemented \haskellIn{solve} and the last two campaigns will not work until you have implemented \haskellIn{steps}. Alternatively, you can run \bashIn{stack repl} to load up the REPL, which is useful for debugging.
 
 The skeleton code contains a bunch of files, most of which you do not need to touch. The most important file is \texttt{\small src/Game.hs} which contains the definitions you will need to complete in order to implement the game. There are some definitions to get you started. Firstly, the arithmetic operations that may be contained in cells of the grids are represented as an algebraic data type where each constructor represent one type of operation:
 \begin{minted}{haskell}
@@ -114,7 +114,7 @@ data Grid = Grid [Int] [Row]
 
 \section{Task}
 
-Complete all definitions in \texttt{\small src/Game.hs} so that the game works as described above. The following function stubs in \texttt{\small src/Game.hs}  need to be implemented:
+Complete all definitions in \texttt{\small src/Game.hs} so that the game works as described above. The following function stubs in \texttt{\small src/Game.hs} need to be implemented:
 
 \begin{enumerate}
 	\item \haskellIn{eval :: Action -> Int -> Int}\\
@@ -127,16 +127,36 @@ Complete all definitions in \texttt{\small src/Game.hs} so that the game works a
 	This function should determine the result of evaluating all the enabled arithmetic operations in a list of cells, starting with $0$. For example, evaluating \haskellIn{result [Cell True (Add 3), Cell False (Add 5)]} should result in \haskellIn{3}.
 	
 	\item \haskellIn{solveRow :: Row -> [Row]}\\
-	This function should find all solutions for a given row.
+	This function should find all solutions for a given row. For example:
+\begin{minted}{haskell}
+    solveRow (Row 4 [Cell False (Add 4), Cell False (Sub 7)])
+==> [Row 4 [Cell True (Add 4), Cell False (Sub 7)]]
+\end{minted}
 	
 	\item \haskellIn{solve :: Grid -> [Grid]}\\
-	This function should find all solutions for a given grid, without rotating any rows or columns. If there are no solutions, an empty list should be returned.
+	This function should find all solutions for a given grid, without rotating any rows or columns. If there are no solutions, an empty list should be returned. For example (formatted for ease of reading):
+\begin{minted}{haskell}
+solve (Grid [2,4] [ Row 3 [ Cell False (Add 2)
+                          , Cell False (Add 1)
+                          ]
+                  , Row 3 [ Cell False (Add 2)
+                          , Cell False (Add 3)
+                          ]
+                  ])
+==> [Grid [2,4] [ Row 3 [ Cell True (Add 2)
+                        , Cell True (Add 1)
+                        ]
+                , Row 3 [ Cell False (Add 2)
+                        , Cell True (Add 3)
+                        ]
+                ]]
+\end{minted}
 	
 	\item \haskellIn{rotations :: Grid -> [Grid]}\\
-	Given a grid, this function should return a list of grids containing all possible ways to rotate the input grid. This means the resulting list should normally have $\mathit{rows} + \mathit{columns}$ many elements.
+	Given a grid, this function should return a list of grids containing all possible ways to rotate the input grid by one rotation. This means the resulting list should normally have $\mathit{rows} + \mathit{columns}$ many elements.
 	
 	\item \haskellIn{steps :: Grid -> [Grid]}\\
-	If a grid cannot be solved without rotating it, this function should return a list of grids representing the shortest sequence of rotations which lead to a solution. I.e. the last grid in the list should be the solution and each grid should differ from the previous by exactly one rotation.
+	If a grid cannot be solved without rotating it, this function should return a list of grids representing the shortest sequence of rotations which lead to a solution. I.e. the list returned by \haskellIn{steps inputGrid} should contain as many elements as rotations are required to reach a solution starting from \haskellIn{inputGrid}. \haskellIn{inputGrid} should not be included in the resulting list. The last grid in the list returned should be the solution (with the right cells enabled) and each grid should differ from the previous grid in the list by exactly one rotation.
 \end{enumerate}
 
 %-----------------------------------------------------------
@@ -162,7 +182,7 @@ This coursework is worth 15\% of the overall module mark. It will be marked out 
 \begin{itemize}
 	\item 20\% for \emph{correctness and documented understanding (basic grids)}. You gain full marks here if all parts of the coursework required to solve basic grids (up to and including the \haskellIn{solve} function) been attempted, are correct, and are commented sufficiently well so that someone who is unfamiliar with your code can understand it. You may use \texttt{\small stack test} as a rough indication for whether your implementation is correct, but there are some things the unit tests do not test for, so you should run the program and ensure that everything works as described.
 	
-	\item 20\% for \emph{correctness and documented understanding (advanced grids)}. You gain full marks here if all parts of the coursework required to solve advanced grids (the \haskellIn{steps} function) been attempted, are correct, and are commented sufficiently well so that someone who is unfamiliar with your code can understand it. You may use \texttt{\small stack test} as a rough indication for whether your implementation is correct, but there are some things the unit tests do not test for, so you should run the program and ensure that everything works as described.
+	\item 20\% for \emph{correctness and documented understanding (advanced grids)}. You gain full marks here if all parts of the coursework required to solve advanced grids (the \haskellIn{rotations} and \haskellIn{steps} functions) been attempted, are correct, and are commented sufficiently well so that someone who is unfamiliar with your code can understand it. You may use \texttt{\small stack test} as a rough indication for whether your implementation is correct, but there are some things the unit tests do not test for, so you should run the program and ensure that everything works as described.
 	
 	\item 20\% for \emph{elegance}. Definitions should be concise and readable, new functions should be introduced where needed, existing library functions used when applicable, etc.
 	 
