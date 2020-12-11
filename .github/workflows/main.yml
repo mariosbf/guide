@@ -14,7 +14,15 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Initialisation 
-      run: mkdir bin 
+      env: 
+        SB_USER: ${{ secrets.SB_USER }}
+        SB_PASSWORD: ${{ secrets.SB_PASSWORD }}
+      id: init
+      run: |
+        mkdir bin 
+        unset HAS_SECRET
+        if [-n $SB_PASSWORD]; then HAS_SECRET='true' ; fi
+        echo ::set-output name=HAS_SECRET::${HAS_SECRET}
 
     - name: LaTeX compilation
       uses: dante-ev/latex-action@v0.2.0
@@ -23,6 +31,7 @@ jobs:
         args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
 
     - name: Download sitebuilder-util
+      if: ${{ steps.init.outputs.HAS_SECRET }}
       uses: Legion2/download-release-action@v2.1.0
       with:
         repository: mbg/sitebuilder-util
@@ -31,6 +40,7 @@ jobs:
         file: sitebuilder-util
 
     - name: Publish to Sitebuilder 
+      if: ${{ steps.init.outputs.HAS_SECRET }}
       env: 
         SB_USER: ${{ secrets.SB_USER }}
         SB_PASSWORD: ${{ secrets.SB_PASSWORD }}
