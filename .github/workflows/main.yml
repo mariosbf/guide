@@ -30,6 +30,12 @@ jobs:
         root_file: cs141.tex
         args: -bibtex -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -latexoption=-shell-escape -latexoption=-synctex=1
 
+    - name: Upload cs141.pdf
+      uses: actions/upload-artifact@v2
+      with:
+        name: cs141.pdf
+        path: cs141.pdf
+
     - name: Download sitebuilder-util
       if: ${{ steps.init.outputs.HAS_SECRET }}
       uses: Legion2/download-release-action@v2.1.0
