@@ -9,7 +9,7 @@ Let us begin by defining a data type named \haskellIn{Expr} in Haskell to repres
 data Expr = Val Int 
           | Plus Expr Expr
 \end{minted}
-With this data type, we can represent values such as \haskellIn{Plus (Val 4) (Val 8)} and \haskellIn{Plus (Plus (Val 4) (Val 15) (Val 8)} in Haskell. However, these values of type \texttt{\small Expr} have no meaning. Even though we may have an intuition for what these values represent due to the names that we have given to \texttt{\small Expr}'s data constructors, the names are completely arbitrary and we could have called them anything. To give meaning to values of this type, we need to implement a \emph{denotational semantics}, also known as an \emph{interpreter}:
+With this data type, we can represent values such as \haskellIn{Plus (Val 4) (Val 8)} and \haskellIn{Plus (Plus (Val 4) (Val 15)) (Val 8)} in Haskell. However, these values of type \texttt{\small Expr} have no meaning. Even though we may have an intuition for what these values represent due to the names that we have given to \texttt{\small Expr}'s data constructors, the names are completely arbitrary and we could have called them anything. To give meaning to values of this type, we need to implement a \emph{denotational semantics}, also known as an \emph{interpreter}:
 \begin{minted}{haskell}
 eval :: Expr -> Int 
 eval (Val n)    = n 
