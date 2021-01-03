@@ -167,7 +167,7 @@ Complete all definitions in \texttt{\small src/Game.hs} so that the game works a
 \end{minted}
 	
 	\item \haskellIn{solve :: Grid -> [Grid]}\\
-	This function should find all solutions for a given grid, without rotating any rows or columns. If there are no solutions, an empty list should be returned. For example:
+	This function should find all solutions for a given grid, without rotating any rows or columns. The cells in the input grid may be in any state. If there are no solutions, an empty list should be returned. For example:
 \begin{minted}{haskell}
 solve (MkGrid [2,4] [ MkRow 3 [ MkCell False (Add 2)
                               , MkCell False (Add 1)
