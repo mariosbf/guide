@@ -76,7 +76,7 @@ filterFA :: (Foldable f, ??? g) => (a -> Bool) -> f a -> g a
 
 \taskLine 
 
-\task{We can write \emph{even more} generic, useful functions by combining multiple type class constraints. For example: }
+\task{We can write \emph{even more} generic, useful functions by combining multiple type class constraints as follows (note that this uses the \haskellIn{Alternative} type class which is described in full in in \Cref{sec:applicatvies}): }
 \begin{minted}{haskell}
 asum :: (Alternative f, Foldable t) => t (f a) -> f a
 \end{minted}
