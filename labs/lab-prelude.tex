@@ -32,9 +32,9 @@ You can find some more examples of what is available to you with respect to impo
 
 \task{For this exercise, we will be creating a simple package from scratch with the help of \texttt{\small stack}. In a terminal, run the following:}
 \begin{minted}{text}
-$ stack new my-package simple-library --resolver=lts-14.12
+$ stack new my-package simple-library --resolver=lts-16.27
 \end{minted}
-The \texttt{\small stack new} command is used to create a new package. We have specified \texttt{\small my-package} as the name of the new package and a folder named \texttt{\small my-package} will have been created in the current directory. The \texttt{\small simple-library} argument specifies the template\footnote{\url{https://github.com/commercialhaskell/stack-templates}} that \texttt{\small stack} should use for the new package. Finally, \texttt{\small --resolver=lts-14.12} specifies the stack resolver we want to use, which we set to the same one that is installed on the departmental machines -- we will explain what this is used for later.
+The \texttt{\small stack new} command is used to create a new package. We have specified \texttt{\small my-package} as the name of the new package and a folder named \texttt{\small my-package} will have been created in the current directory. The \texttt{\small simple-library} argument specifies the template\footnote{\url{https://github.com/commercialhaskell/stack-templates}} that \texttt{\small stack} should use for the new package. Finally, \texttt{\small --resolver=lts-16.27} specifies the stack resolver we want to use, which we set to the same one that is installed on the departmental machines -- we will explain what this is used for later.
 
 \task{Explore the \texttt{\small my-package.cabal} and \texttt{\small src/Lib.hs} files that were created. In the \texttt{\small my-package.cabal} file you will find two lines at the top which specify the name and version of the package:}
 \begin{minted}{text}
